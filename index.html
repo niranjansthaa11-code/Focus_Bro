@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sathi_Focus</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="main-container">
-        
+        <div class="calender-container">
+            <div class="calender-header">
+                <div class="calender-nav-buttons">
+                    <button class="calnav-btn" id="Prev-month"> Pre</button>
+                    <button class="calnav-btn" id="next-month"> next</button>
+                </div>
+                <div class="moth-year" id="month-year"> April 2026 </div>
+            </div>
+            <div class="week-days">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+            </div>
+            <div class="days" id="days"></div>
+            <div class="calender-footer">
+                <button class="today-btn"> today</button>
+                <div class="event-indicator">
+                    <span>Has events comming</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- event dekhaunih thau -->
+        <div class="event-panel" id="event-panel">
+            <div class="event-header">
+                <div class="event-date" id="event-date">Select a date</div>
+            </div>
+            <div class="event-list" id="evnet-list">
+                <div class="no-events"> Please select a date to view them here</div>
+            </div>
+        </div>
     </div>
+    <script src="app.js"></script>
 </body>
+
 </html>
