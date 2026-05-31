@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sathi_Focus</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -13,8 +16,8 @@
         <div class="calender-container">
             <div class="calender-header">
                 <div class="calender-nav-buttons">
-                    <button class="calnav-btn" id="Prev-month"> Pre</button>
-                    <button class="calnav-btn" id="next-month"> next</button>
+                    <button class="calnav-btn" id="Prev-month"> <i class="fa-solid fa-left-long"></i></button>
+                    <button class="calnav-btn" id="next-month"> <i class="fa-solid fa-right-long"></i></button>
                 </div>
                 <div class="moth-year" id="month-year"> April 2026 </div>
             </div>
@@ -40,6 +43,7 @@
         <div class="event-panel" id="event-panel">
             <div class="event-header">
                 <div class="event-date" id="event-date">Select a date</div>
+                <i class="fas fa-calendar-alt event-icon"></i>
             </div>
             <div class="event-list" id="evnet-list">
                 <div class="no-events"> Please select a date to view them here</div>
