@@ -113,26 +113,90 @@ body {
     background: var(--text);
     font-weight: 800;
 }
-.days{
+
+.days {
     display: grid;
-    grid-template-columns: repeat(7,1fr);
+    grid-template-columns: repeat(7, 1fr);
     gap: 5px;
     padding: 1rem;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--dark);
+    cursor: pointer;
+    position: relative;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.day:hover {
+    background: rgba(74, 107, 223, 0.1);
+    transform: scale(1.1);
+}
+
+.day.today {
+    background: var(--today);
+    color: #1C1A18;
+    font-weight: bold;
+}
+
+.day.selected {
+    background: var(--selected);
+    color: white;
+    font-weight: bold;
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* this is for the days for the remaning days of the month that don't lie on the month  */
+.day.other-month {
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.day.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
 }
 
 .weekday {
     text-align: center;
     padding: 0.5rem;
-    font-size:0.9rem;
+    font-size: 0.9rem;
 }
-.calender-footer{
+
+.calender-footer {
     padding: 1rem;
     text-align: center;
     display: flex;
     border-top: 1px solid black;
     justify-content: space-between;
 }
-.today-btn{
+
+.today-btn {
     background: #1C1A18;
     color: white;
     border: none;
@@ -142,19 +206,22 @@ body {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-.today-btn:hover{
+
+.today-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(133, 142, 130, 0.3)
 }
-.event-indicator{
+
+.event-indicator {
     font-size: 0.8rem;
     color: #5C5349;
     display: flex;
     align-items: center;
     font-weight: bold;
 }
+
 /* Event pannel start  */
-.event-panel{
+.event-panel {
     background: white;
     display: flex;
     flex-direction: column;
@@ -165,7 +232,8 @@ body {
     width: 100%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-.event-header{
+
+.event-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -173,28 +241,71 @@ body {
     padding-bottom: 1rem;
     border-bottom: 2px solid #1C1A18;
 }
-.event-date{
+
+.event-date {
     font-weight: 600;
     font-size: 1.5rem;
 }
-.event-list{
+
+.event-list {
     max-height: 350px;
     overflow-y: auto;
 }
-.no-events{
+
+.no-events {
     text-align: center;
     color: var(--dark);
     padding: 2rem 1rem;
     font-style: italic;
 }
-.event-icon{
+
+.event-icon {
     font-size: 1.2rem;
     color: var(--dark);
     margin-right: 10px;
 }
-.event-panel{
+
+.event-panel {
     max-width: 400px;
 }
-.event-date{
+
+.event-date {
     font-size: 1.3rem;
+    font-weight: 600;
+    color:var(--dark)
+}
+.event-list{
+    max-height: 350px;
+    overflow-y: auto;
+}
+.event-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    background: (var(--secondary));
+    border-left: 4px solid var(--accent);
+    transition: transform 0.2s ease;
+}
+.event-item:hover{
+    transform: translateX(5px);
+}
+.event-color{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--dark);
+    flex-shrink: 0;
+}
+.event-time{
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--accent);
+    min-width: 80px;
+}
+.event-text{
+    font-size:0.9rem;
+    color:var(--dark);
 }

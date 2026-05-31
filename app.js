@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     const monthyear = document.getElementById('month-year');
     const daysel = document.getElementById('days');
-    const PrevMonthBtn = document.getElementById('prev-month');
+    const PrevMonthBtn = document.getElementById('Prev-month');
     const NextMonthbtn = document.getElementById('next-month');
     const todaybtn = document.getElementById('today-btn');
     const eventPanel = document.getElementById('event-panel');
     const eventDate = document.getElementById('event-date');
     const eventList = document.getElementById('event-list');
 
-    let CurrentDate = new Date();
-    console.log(CurrentDate);
+    let currentDate = new Date();
+    console.log(currentDate);
     let selectedDate = null;
 
 
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { time: '10:00 AM', text: 'ops' },
             { time: '02:30 PM', text: 'Project review' }
         ],
-        '2025-9-20': [
+        '2026-5-20': [
             { time: '11:00 AM', text: 'ferous appointment' }
         ],
         '2025-9-25': [
@@ -41,18 +41,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // let us first render the calender function 
     function renderCalender() {
         const firstDay = new Date(
-            CurrentDate.getFullYear(),
-            CurrentDate.getMonth(),
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
             1
         );
 
         const lastDay = new Date(
-            CurrentDate.getFullYear(),
-            CurrentDate.getMonth() + 1,
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
             0 //here 0 means the last day of the previous month 
         );
         const PrevLastday = new Date(
-            CurrentDate.getFullYear(), CurrentDate.getMonth(), 0
+            currentDate.getFullYear(), currentDate.getMonth(), 0
         );
 
         const firstDayIndex = firstDay.getDay();
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //for the previous month days
         for (let x = firstDayIndex; x > 0; x--) { // this loop counts from the firstdayindex to 0 index
             const prevDate = PrevLastday.getDate() - x + 1;
-            const dateKey = `${currentDate.getFullYear()}-${CurrentDate.getMonth()}-${prevDate}`;
+            const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${prevDate}`;
             const hasEvent = events[dateKey] !== undefined;
 
             days += `<div class="day other-month${hasEvent ? ' has-events' : ''}">${prevDate}</div>`;
@@ -111,113 +111,92 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             days += `<div class="${dayClass}" data-date="${dateKey}"> ${i} </div>`; //this creates a div where class is there and i is shown in html
             //backticks helps to mix the javascript variable inside the html tags.
+        }
 
-            //for the next month days
-            for (let j = 1; j <= nextDays; j++) {
-                const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 2}-${j}`;
-                const hasEvent = events[dateKey] !== undefined; //to tell the user if there is event or not there
+        //for the next month days
+        for (let j = 1; j <= nextDays; j++) {
+            const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 2}-${j}`;
+            const hasEvent = events[dateKey] !== undefined; //to tell the user if there is event or not there
 
-                days += `<div class="day other-month${hasEvent ? ' has-events' : ''}">${j}</div>`;
-            }
+            days += `<div class="day other-month${hasEvent ? ' has-events' : ''}">${j}</div>`;
+        }
 
-            daysel.innerHTML = days; //this makes the calender apper 
-            //add click event to days
-            document.querySelectorAll('.day:not(.other_month)').forEach(day => {
-                day.addEventListener('click', () => {
-                    const dateStr = day.getAttribute('data-date'); //this helps to read the string
-                    const [year, month, dayNum] = dateStr.split('-').map(Number);//split tags splits the date into year month and days
-                    selectedDate = new Date(year, month - 1, dayNum);//.map converts each to a real number
-                    renderCalender();
-                    showEvents(dateStr);//helps in displaying the days event on the panel
-                });
+        daysel.innerHTML = days; //this makes the calender apper 
+        //add click event to days
+        document.querySelectorAll('.day:not(.other-month)').forEach(day => {
+            day.addEventListener('click', () => {
+                const dateStr = day.getAttribute('data-date'); //this helps to read the string
+                const [year, month, dayNum] = dateStr.split('-').map(Number);//split tags splits the date into year month and days
+                selectedDate = new Date(year, month - 1, dayNum);//.map converts each to a real number
+                renderCalender();
+                showEvents(dateStr);//helps in displaying the days event on the panel
             });
+        });
+    }
 
 
-            //function for showing events of selected date
-            function showEvents(dateStr) {
-                const [year, month, day] = dateStr.split('-').map(Number);
-                const dateObj = new Date(year, month - 1, day);
-                const months = [
-                    "January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                ];
-                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const dayName = dayNames[dateObj.getDay()];
-                eventDate.textContent = `${dayName}, ${months[dateObj.getMonth()]} ${day}, ${year}`;
-                //converts date into something word kind of thing like monday june21 2026
+    //function for showing events of selected date
+    function showEvents(dateStr) {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const dateObj = new Date(year, month - 1, day);
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const dayName = dayNames[dateObj.getDay()];
+        eventDate.textContent = `${dayName}, ${months[dateObj.getMonth()]} ${day}, ${year}`;
+        //converts date into something word kind of thing like monday june21 2026
 
-                //clear previous events
-                eventList.innerHTML = '';
+        //clear previous events
+        eventList.innerHTML = '';
 
 
-                if (events[dateStr]) {
-                    events[dateStr].forEach(event => {
-                        const eventItem = document.createElement('div');
-                        eventItem.className = 'event-item';
-                        eventItem.innerHTML = `
+        if (events[dateStr]) {
+            events[dateStr].forEach(event => {
+                const eventItem = document.createElement('div');
+                eventItem.className = 'event-item';
+                eventItem.innerHTML = `
                         <div class="event-color"></div>
                         <div class="event-time">${event.time}</div>
                         <div class="event-text">${event.text}</div> `;
-                        eventList.appendChild(eventItem);
-                    });
-                } else {
-                    eventList.innerHTML = '<div class="no-events">No events scheduled for this day</div>';//if no event exists it shows this thing
-
-                }
-            }
-            //when the previous month is clicked it goes to the previous month
-            PrevMonthBtn.addEventListener('click', () => {
-                CurrentDate.setMonth(currentDate.getMonth() - 1);//returns to the previous month
-                renderCalender(); //this renders the calender
-                eventDate.textContent = 'select a date';
-                eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
+                eventList.appendChild(eventItem);
             });
+        } else {
+            eventList.innerHTML = '<div class="no-events">No events scheduled for this day</div>';//if no event exists it shows this thing
 
-            //when the next month is clicked it goes to the next month 
-            NextMonthbtn.addEventListener('click', () => {
-                CurrentDate.setMonth(currentDate.getMonth() - 1);
-                eventDate.textContent = 'select a date';
-                eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
-            });
-
-            //when today btn is clicked 
-            //also attches the click event to the today button 
-            todaybtn.addEventListener('click', () => {
-                currentDate = new Date();
-                selectedDate = new Date();//current date ra new date full jump garxw when clicked today btn
-                renderCalender();
-
-                const dateStr = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-                showEvents(dateStr);
-            });
-
-            //initialization of the calender
-            renderCalender(); //this creates a calender here
-
-
-        };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
     }
+    //when the previous month is clicked it goes to the previous month
+    PrevMonthBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);//returns to the previous month
+        renderCalender(); //this renders the calender
+        eventDate.textContent = 'select a date';
+        eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
+    });
 
-)
+    //when the next month is clicked it goes to the next month 
+    NextMonthbtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalender();
+        eventDate.textContent = 'select a date';
+        eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
+    });
+
+    //when today btn is clicked 
+    //also attches the click event to the today button 
+    todaybtn.addEventListener('click', () => {
+        currentDate = new Date();
+        selectedDate = new Date();//current date ra new date full jump garxw when clicked today btn
+        renderCalender();
+
+        const dateStr = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+        showEvents(dateStr);
+
+        //initialization of the calender
+        //this creates a calender here
+
+
+    });
+    renderCalender();
+    });
