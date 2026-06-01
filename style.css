@@ -39,6 +39,9 @@ body {
     position: sticky;
     top: 0; 
     align-self: start;
+    transition: width 0.4s ease;
+    overflow: hidden;
+    text-wrap: nowrap;
     /* top is refrence for the sticky thing  */
 }
 #sidebar ul{
@@ -93,6 +96,23 @@ body {
 }
 #sidebar.close{
     padding: 5px;
+    width: 60px;
+}
+#sidebar.close .logo{
+    display: none;
+}
+#sidebar.close span{
+    display: none;
+}
+#sidebar.close .dropdown-arrow{
+    display: none;
+}
+#sidebar.close a,
+#sidebar.close .dropdown-btn {
+    justify-content: center;
+    padding: .85em 0;
+}
+#sidebar.close ul {
     width: 60px;
 }
 .dropdown-arrow{
