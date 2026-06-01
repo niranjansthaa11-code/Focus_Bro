@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const eventDate = document.getElementById('event-date');
     const eventList = document.getElementById('event-list');
 
-    let currentDate = new Date();
+    let currentDate = new NepaliDate();
     console.log(currentDate);
     let selectedDate = null;
 
@@ -46,38 +46,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // let us first render the calender function 
     function renderCalender() {
-        const firstDay = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            1
-        );
 
-        const lastDay = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            0 //here 0 means the last day of the previous month 
-        );
-        const PrevLastday = new Date(
-            currentDate.getFullYear(), currentDate.getMonth(), 0
-        );
+        //for nepali date
+        const year = currentDate.getYear();
+        const month =currentDate.getMonth();
 
+        const firstDay = new NepaliDate(year,month,1);
+        const daysInMonth =firstDay.daysInMonth;
         const firstDayIndex = firstDay.getDay();
-        const lastDayIndex = lastDay.getDay();
-        const nextDays = 7 - lastDayIndex - 1; // yaha chahi last din paxi kati ota grey grnih vanera vanxw ...  index chahi 0 batw suru hunxa 
+
+        const prevMonth = month === 0?11:month-1;
+        const prevyear =month === 0? year -1 :year;
+        const PrevLastday = new NepaliDate(prevyear,prevMonth,1).daysInMonth;
+
+        //for the last day
+        const lastDay=new NepaliDate(year,month,daysInMonth);
+        const lastDayIndex=lastDay.getDay();
+        const nextDays = lastDayIndex === 6 ? 0 : 6 - lastDayIndex; //same sort of logic like i did with the english date
 
         const months = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
+            "Baishak", "Jeeth", "Aasar", "Shrawan", "Bhadra", "Ashwin",
+            "Kartik", "Mangsir", "Paush", "Magh", "Falgun", "Chaitra"
         ];
 
-        monthyear.innerHTML = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        monthyear.innerHTML = `${months[month]} ${year}`;
         let days = ""; //this changes the heading to current date 
 
         //here three loops draw the main grid where the number lies .....
 
         //for the previous month days
         for (let x = firstDayIndex; x > 0; x--) { // this loop counts from the firstdayindex to 0 index
-            const prevDate = PrevLastday.getDate() - x + 1;
+            const prevDate = PrevLastday - x + 1;
             const dateKey = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${prevDate}`;
             const hasEvent = events[dateKey] !== undefined;
 
@@ -190,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     //when today btn is clicked 
-    //also attches the click event to the today button 
+    //also attches the click event to the today button
     todaybtn.addEventListener('click', () => {
         currentDate = new Date();
         selectedDate = new Date();//current date ra new date full jump garxw when clicked today btn

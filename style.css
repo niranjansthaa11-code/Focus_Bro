@@ -115,6 +115,13 @@ body {
 #sidebar.close ul {
     width: 60px;
 }
+#sidebar.close #toggle-btn{
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
 .dropdown-arrow{
     margin-left: auto;
     transition: transform 0.4s ease;
@@ -183,7 +190,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 900px;
+    max-width: 750px;
     width: 100%;
 }
 
@@ -192,7 +199,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    max-width: 420px;
+    max-width: 340px;
     width: 100%;
     overflow: visible;
     perspective: 1000px;
@@ -217,7 +224,7 @@ body {
 }
 
 .moth-year {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
     position: relative;
@@ -267,8 +274,8 @@ body {
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    padding: 1rem;
+    gap: 2px;
+    padding: 0.7rem;
 }
 
 .day {
@@ -335,11 +342,11 @@ body {
 .weekday {
     text-align: center;
     padding: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
 }
 
 .calender-footer {
-    padding: 1rem;
+    padding: 0.7rem;
     text-align: center;
     display: flex;
     border-top: 1px solid black;
@@ -375,7 +382,7 @@ body {
     background: white;
     display: flex;
     flex-direction: column;
-    max-width: 420px;
+    max-width: 340px;
     height: fit-content;
     border-radius: 20px;
     padding: 1.5rem;
@@ -387,14 +394,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid #1C1A18;
 }
 
 .event-date {
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .event-list {
