@@ -1,4 +1,57 @@
+
+
+//we are creating  a function where the system gets the english date and converts it in the nepali date by mathmatical calulations  and pass the functions like currentDate.getyear(),currentdate.getmonth() and also getday()
+if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry exists
+    console.error('NepaliDate library not loaded! Using fallback...'); 
+    window.NepaliDate = function(year, month, day) { //new function creation fo the backup if nepalidate doesn't exists
+        // we are extracting the english date for the conversion 
+        const today = new Date();
+        const engYear = today.getFullYear(); 
+        const engMonth = today.getMonth();
+        const engDay = today.getDate();
+        //if no datea is passed about year this function runs 
+        if (!year) {
+            this._year = engYear + 57; //kinaki nepali year snga english date ko diffrence jamma 56.7 years xw
+            this._month = (engMonth + 9) % 12; //new year starts around mid-april so calulation done to find the nepali month 
+            this._day = Math.min(engDay + 16, 30); //math min helps to maintain that the day never exceeds 30 and here engday is diff of 16 days 
+
+        } else { //is data is passed by the user we can here directly add the values this would be used for the finding of the even t
+            this._year = year;
+            this._month = month || 0; // || o means if nothing given use 0 as default
+            this._day = day || 1;
+        }
+        
+        //these create functions that return stored values like when the funciton calls this.year it returns the values in .getyear()
+        this.getYear = function() { return this._year; };
+        this.getMonth = function() { return this._month; };
+        this.getDate = function() { return this._day; };
+
+        //it converts the nepali date back to english date to figure out the day of week
+        this.getDay = function() { 
+            const d = new Date(this._year - 57, this._month - 8, this._day - 16);
+            return d.getDay();  //this returns 0-6 values 
+        };
+        
+        // this helps to create an aray of how many days each month has 
+        const daysInMonths = [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30];
+        this.daysInMonth = daysInMonths[this._month] || 30; //the days in month is compared with the months and if there is no data about how many days then returns default 30;
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
+
+
     const monthyear = document.getElementById('month-year');
     const daysel = document.getElementById('days');
     const PrevMonthBtn = document.getElementById('Prev-month');
@@ -15,30 +68,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //adding the sample events for trying 
     const events = {
-        '2025-9-15': [
+        '2083-03-15': [
             { time: '10:00 AM', text: 'ops' },
             { time: '02:30 PM', text: 'Project review' }
         ],
-        '2026-5-20': [
+        '2083-03-20': [
             { time: '11:02 AM', text: 'feroug appointment' }
         ],
-        '2026-5-20': [
-            { time: '11:03 AM', text: 'feroudfgd appointment' }
-        ],
-        '2026-5-20': [
-            { time: '11:00 AM', text: 'feroudfgdf appointment' }
-        ],
-        '2025-9-25': [
+        '2083-03-25': [
             { time: '07:00 PM', text: 'Birthday party lima' },
             { time: '09:00 PM', text: 'Dinner with friends on denevo' }
         ],
-        '2025-10-2': [
+        '2083-03-2': [
             { time: '03:00 PM', text: 'video' }
         ],
-        '2025-10-10': [
+        '2083-03-10': [
             { time: 'All day', text: 'exams' }
         ],
-        '2025-10-18': [
+        '2083-04-18': [
             { time: '12:00 PM', text: 'Lunch with client' },
             { time: '04:00 PM', text: 'photoshoot' }
         ]
@@ -84,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         //for the actual real days of the given month ...
         for (let i = 1; i <= daysInMonth; i++) {
-            const dateKey = `${year}-${month + 1}-${i}`; //this would be used later in the code for the event checking 
+            const dateKey = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;//this would be used later in the code for the event checking 
             const today = new NepaliDate();
             const hasEvent = events[dateKey] !== undefined;
             let dayClass = 'day';
@@ -106,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (hasEvent) {
-                dayClass += ' has-events'; // i will be adding the css later for it
+                dayClass += ' has-event'; // i will be adding the css later for it
             }
             days += `<div class="${dayClass}" data-date="${dateKey}"> ${i} </div>`; //this creates a div where class is there and i is shown in html
             //backticks helps to mix the javascript variable inside the html tags.
@@ -207,5 +254,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     renderCalender();
-    console.log("Calendar rendered. Days count:", document.querySelectorAll('.day').length);
+    console.log("Current Nepali Date:", {
+    year: currentDate.getYear(),
+    month: currentDate.getMonth(),        
+    date: currentDate.getDate(),
+    day: currentDate.getDay()
+});
 });
