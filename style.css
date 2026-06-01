@@ -77,16 +77,47 @@ body {
     font:inherit;
     cursor: pointer;
 }
-.sub-menu {
-    list-style: none;
-    flex-direction: column;
+#sidebar .sub-menu {
+    display: grid;
+    grid-template-rows: 0fr; 
+    /* when showing up this should be grid-template-row :1fr:    list-style: none; */
     padding-left: 2.5em;  
     margin-top: 4px;
+    transition: grid-template-rows 0.4s ease;
+    > div{
+        overflow: hidden;
+    }
 }
-#sidebar a span, #sidebar .dropdown-btn{
-    flex-grow: 1;
+#sidebar .sub-menu.show{
+    grid-template-rows: 1fr;
 }
-
+#sidebar.close{
+    padding: 5px;
+    width: 60px;
+}
+.dropdown-arrow{
+    margin-left: auto;
+    transition: transform 0.4s ease;
+}
+/* for the rotation of the icon when clicking  */
+.dropdown-arrow.rotated{
+    transform: rotate(180deg);
+}
+#toggle-btn{
+    margin-left: auto;
+    padding: 1em;
+    border: none;
+    border-radius: .5em;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+#toggle-btn.rotated{
+    transform: rotate(180deg);
+}
+#toggle-btn:hover{
+    color: #1C1A18;
+}
 
 
 
