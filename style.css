@@ -29,121 +29,193 @@ body {
 }
 
 /* for the side nav-bar */
-#sidebar{
+#sidebar {
     box-sizing: border-box;
     height: 100vh;
     width: 250px;
     padding: 5px 1em;
-    background-color: var(--text);
-    border-right: 1px solid var(--dark);
+    background-color: #252220;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
     position: sticky;
-    top: 0; 
+    top: 0;
     align-self: start;
     transition: width 0.4s ease;
     overflow: hidden;
     text-wrap: nowrap;
     /* top is refrence for the sticky thing  */
 }
-#sidebar ul{
+
+#sidebar ul {
     list-style: none;
 }
-#sidebar >ul>li:first-child{
+
+#sidebar>ul>li:first-child {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 16px;
-    .logo{ 
+    align-items: center;
+    padding: 10px 4px 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    .logo {
         /* css nesting use vaxw */
         font-weight: 800;
     }
 }
+
+#sidebar>ul>li:first-child .logo {
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--primary)
+}
+
 #sidebar ul li.active a {
-    color: #FAF8F5;
-    i{
-        fill: red;
-    }
+    background: rgba(212, 197, 169, 0.1);
+    color: var(--primary);
 }
-#sidebar a ,#sidebar .dropdown-btn ,#sidebar.logo{
-    border-radius: .5em;
-    padding: .85em;
-    text-decoration: none;
-    color: var(--dark);
-    display: flex;
-    align-items: center;
-    gap: 1em;
+
+/* this was done for the svg */
+#sidebar ul li a svg {
+    fill: currentColor;
+    flex-shrink: 0;
 }
-.dropdown-btn{
+
+#sidebar ul li a i {
+    font-size: 1rem;
+    flex-shrink: 0;
+    /* Prevents from shrinkin gdue to flex property  */
+
+}
+
+.dropdown-btn {
     width: 100%;
+    color: rgba(255, 255, 255, 0.5); 
     text-align: left;
     background: none;
-
-    border: none;
-    font:inherit;
+    font: inherit;
     cursor: pointer;
+    border-radius: 8px;
+    padding: 9px 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
 }
+
+.dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--primary);
+
+}
+
+
+
+#sidebar ul li a {
+    border-radius: 8px;
+    padding: 9px 12px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+    margin-bottom: 2px;
+}
+
+#sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--primary);
+}
+
+
+
 #sidebar .sub-menu {
     display: grid;
-    grid-template-rows: 0fr; 
+    grid-template-rows: 0fr;
     /* when showing up this should be grid-template-row :1fr:    list-style: none; */
-    padding-left: 2.5em;  
-    margin-top: 4px;
+    padding-left: 44px;
+    margin-top: 2px;
     transition: grid-template-rows 0.4s ease;
-    > div{
+
+    >div {
         overflow: hidden;
     }
 }
-#sidebar .sub-menu.show{
+
+#sidebar .sub-menu.show {
     grid-template-rows: 1fr;
 }
-#sidebar.close{
-    padding: 5px;
-    width: 60px;
+
+#sidebar.close {
+    padding: 8px 6px;
+    width: 58px;
 }
-#sidebar.close .logo{
+
+#sidebar.close .logo {
     display: none;
 }
-#sidebar.close span{
+
+#sidebar.close span {
     display: none;
 }
-#sidebar.close .dropdown-arrow{
+
+#sidebar.close .dropdown-arrow {
     display: none;
 }
+
 #sidebar.close a,
 #sidebar.close .dropdown-btn {
     justify-content: center;
-    padding: .85em 0;
+    padding: 10px 0;
 }
-#sidebar.close ul {
-    width: 60px;
-}
-#sidebar.close #toggle-btn{
+
+#sidebar.close #toggle-btn {
     margin-left: 0;
     width: 100%;
     justify-content: center;
     display: flex;
     align-items: center;
 }
-.dropdown-arrow{
+
+.dropdown-arrow {
     margin-left: auto;
+    opacity: 0.5;
     transition: transform 0.4s ease;
+    font-size: 0.85rem;
 }
+
 /* for the rotation of the icon when clicking  */
-.dropdown-arrow.rotated{
+.dropdown-arrow.rotated {
     transform: rotate(180deg);
 }
-#toggle-btn{
+
+#toggle-btn {
     margin-left: auto;
-    padding: 1em;
+    padding: 7px;
     border: none;
-    border-radius: .5em;
-    background: none;
-    cursor: pointer;
-    transition: transform 0.4s ease;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.06);
+    transition: all 0.25s ease;
+    color: rgba(255, 255, 255, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
 }
-#toggle-btn.rotated{
+
+#toggle-btn.rotated {
     transform: rotate(180deg);
 }
-#toggle-btn:hover{
-    color: #1C1A18;
+
+#toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--primary);
 }
 
 
@@ -153,35 +225,11 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.main{
+.main {
     padding: 25px;
-    overflow-y:auto;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -190,8 +238,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 750px;
+    max-width: 100%;
     width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-right: 20px;
 }
 
 .calender-container {
@@ -201,6 +252,8 @@ body {
     padding: 10px;
     max-width: 340px;
     width: 100%;
+    flex: 1;
+    min-width: 300px;
     overflow: visible;
     perspective: 1000px;
     /* added persepective for the 3d effect */
@@ -429,13 +482,15 @@ body {
 .event-date {
     font-size: 1.3rem;
     font-weight: 600;
-    color:var(--dark)
+    color: var(--dark)
 }
-.event-list{
+
+.event-list {
     max-height: 350px;
     overflow-y: auto;
 }
-.event-item{
+
+.event-item {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -446,30 +501,34 @@ body {
     border-left: 4px solid var(--accent);
     transition: transform 0.2s ease;
 }
-.event-item:hover{
+
+.event-item:hover {
     transform: translateX(5px);
 }
-.event-color{
+
+.event-color {
     width: 15px;
     height: 15px;
     border-radius: 50%;
     background: var(--dark);
     flex-shrink: 0;
 }
-.event-time{
+
+.event-time {
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--accent);
     min-width: 80px;
 }
-.event-text{
-    font-size:0.9rem;
-    color:var(--dark);
+
+.event-text {
+    font-size: 0.9rem;
+    color: var(--dark);
 }
 
 
 /* pomodoro css */
-.pomodoro-container{
+.pomodoro-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -478,32 +537,46 @@ body {
     color: var(--dark);
     background-color: #5C5349;
     border-radius: 20px;
-    padding: 4em 3em ;
+    padding: 4em 3em;
     max-width: 340px;
     width: 100%;
+    flex: 1;
+    min-width: 300px;
+    height: fit-content;
+    align-self: flex-start;
+    transition: 0.2s ease-in-out;
 }
-.pompdoro-title{
-    font-size:30px;
+
+.pomodoro-container:hover {
+    transform: translateY(-5px);
 }
-hr{
+
+.pompdoro-title {
+    font-size: 30px;
+}
+
+hr {
     width: 100%;
     background-color: white;
     height: 5px;
     border-radius: 10px;
     border: none;
 }
-#timer{
+
+#timer {
     font-size: 60px;
     font-weight: 800;
 }
-.pomo-btn-wrapper{
+
+.pomo-btn-wrapper {
     display: flex;
     gap: 40px;
     border: 1px solid #1C1A18;
     padding: 10px;
     border-radius: 100px;
 }
-.pomo-btn-wrapper button{
+
+.pomo-btn-wrapper button {
     font-size: 15px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -512,12 +585,10 @@ hr{
     border: none;
     color: black;
     cursor: pointer;
-    transition: 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
-button:hover{
+
+.pomo-btn-wrapper button:hover {
     transform: translateY(-5px);
 
 }
-
-
-
