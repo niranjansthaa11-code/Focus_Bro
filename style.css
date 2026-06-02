@@ -355,7 +355,7 @@ body {
 
 .today-btn {
     background: #1C1A18;
-    color: var(--dark);
+    color: var(--primary);
     border: none;
     padding: 10px 12px;
     border-radius: 50px;
@@ -466,3 +466,58 @@ body {
     font-size:0.9rem;
     color:var(--dark);
 }
+
+
+/* pomodoro css */
+.pomodoro-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    color: var(--dark);
+    background-color: #5C5349;
+    border-radius: 20px;
+    padding: 4em 3em ;
+    max-width: 340px;
+    width: 100%;
+}
+.pompdoro-title{
+    font-size:30px;
+}
+hr{
+    width: 100%;
+    background-color: white;
+    height: 5px;
+    border-radius: 10px;
+    border: none;
+}
+#timer{
+    font-size: 60px;
+    font-weight: 800;
+}
+.pomo-btn-wrapper{
+    display: flex;
+    gap: 40px;
+    border: 1px solid #1C1A18;
+    padding: 10px;
+    border-radius: 100px;
+}
+.pomo-btn-wrapper button{
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 5px;
+    border-radius: 20px;
+    border: none;
+    color: black;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+button:hover{
+    transform: translateY(-5px);
+
+}
+
+
+
