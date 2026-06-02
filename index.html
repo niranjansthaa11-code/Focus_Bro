@@ -75,73 +75,76 @@
 
     <main class="main">
         <!-- For the good morning greeting  -->
-        <div class="greeting-banner" id="greetingbanner">
-            <div class="greeting-content">
-                <greeting-icon id="greetingIcon"><i class="fa-regular fa-sun"></i> </greeting-icon>
+        <main class="main">
+            <div class="greeting-bar">
+                <div class="greeting-text">
+                    <span class="greeting-label" id="greeting-label">Good Morning</span>
+                    <span class="greeting-name">Sathi 👋</span>
+                </div>
+                <div class="greeting-meta">
+                    <span class="greeting-date" id="greeting-date"></span>
+                    <span class="greeting-time" id="greeting-time"></span>
+                </div>
             </div>
-            <div class="greeting-text">
-                <h2 class="greeting-title" id="greetingTitle"> Good Morning, <span class="gretting-name">Sathi</span>  </h2>
-                <p class="greeting-subtitle" id="greetingSubtitle"> Let's Make today Productive Bro ..</p>
-            </div>
-        </div>
-        <div class="greeting-clock" id="greetingClock">00:00 AM</div>
 
+            <div class="main-container">
 
-
-        <div class="main-container">
-            <div class="calender-container">
-                <div class="calender-header">
-                    <div class="calender-nav-buttons">
-                        <button class="calnav-btn" id="Prev-month"> <i class="fa-solid fa-left-long"></i></button>
-                        <button class="calnav-btn" id="next-month"> <i class="fa-solid fa-right-long"></i></button>
+                <div class="main-container">
+                    <div class="calender-container">
+                        <div class="calender-header">
+                            <div class="calender-nav-buttons">
+                                <button class="calnav-btn" id="Prev-month"> <i
+                                        class="fa-solid fa-left-long"></i></button>
+                                <button class="calnav-btn" id="next-month"> <i
+                                        class="fa-solid fa-right-long"></i></button>
+                            </div>
+                            <div class="moth-year" id="month-year"> April 2026 </div>
+                        </div>
+                        <div class="week-days">
+                            <div class="weekday">Sun</div>
+                            <div class="weekday">Mon</div>
+                            <div class="weekday">Tue</div>
+                            <div class="weekday">Wed</div>
+                            <div class="weekday">Thu</div>
+                            <div class="weekday">Fri</div>
+                            <div class="weekday">Sat</div>
+                        </div>
+                        <div class="days" id="days"></div>
+                        <div class="calender-footer">
+                            <button class="today-btn" id="today-btn"> Today</button>
+                            <div class="event-indicator">
+                                <span class="dot-indicator"></span>
+                                <span>Has events comming</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="moth-year" id="month-year"> April 2026 </div>
-                </div>
-                <div class="week-days">
-                    <div class="weekday">Sun</div>
-                    <div class="weekday">Mon</div>
-                    <div class="weekday">Tue</div>
-                    <div class="weekday">Wed</div>
-                    <div class="weekday">Thu</div>
-                    <div class="weekday">Fri</div>
-                    <div class="weekday">Sat</div>
-                </div>
-                <div class="days" id="days"></div>
-                <div class="calender-footer">
-                    <button class="today-btn" id="today-btn"> Today</button>
-                    <div class="event-indicator">
-                        <span class="dot-indicator"></span>
-                        <span>Has events comming</span>
+
+                    <!-- event dekhaunih thau -->
+                    <div class="event-panel" id="event-panel">
+                        <div class="event-header">
+                            <div class="event-date" id="event-date">Select a date</div>
+                            <i class="fas fa-calendar-alt event-icon"></i>
+                        </div>
+                        <div class="event-list" id="event-list">
+                            <div class="no-events"> Please select a date to view them here</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- event dekhaunih thau -->
-            <div class="event-panel" id="event-panel">
-                <div class="event-header">
-                    <div class="event-date" id="event-date">Select a date</div>
-                    <i class="fas fa-calendar-alt event-icon"></i>
+                <!-- Creating a pomodoro timer -->
+                <div class="pomodoro-container">
+                    <h1 class="pompdoro-title">Pomodoro Timer </h1>
+                    <hr>
+                    <p class="timer" id="timer">25:00</p>
+                    <div class="pomo-btn-wrapper">
+                        <button id="start">Start</button>
+                        <button id="stop">Stop</button>
+                        <button id="reset">Reset</button>
+
+                    </div>
+
+
                 </div>
-                <div class="event-list" id="event-list">
-                    <div class="no-events"> Please select a date to view them here</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Creating a pomodoro timer -->
-        <div class="pomodoro-container">
-            <h1 class="pompdoro-title">Pomodoro Timer </h1>
-            <hr>
-            <p class="timer" id="timer">25:00</p>
-            <div class="pomo-btn-wrapper">
-                <button id="start">Start</button>
-                <button id="stop">Stop</button>
-                <button id="reset">Reset</button>
-
-            </div>
-
-
-        </div>
 
 
 
@@ -153,12 +156,12 @@
 
 
 
-    </main>
-    <script src="https://unpkg.com/nepali-date-converter@1.3.0/dist/nepali-date-converter.min.js"></script>
-    <!-- //cdn link of the nepali converter -->
-    <script src="app.js" defer></script>
-    <script src="nav.js" defer> </script>
-    <!-- defer waits till the full html is not opened  -->
+        </main>
+        <script src="https://unpkg.com/nepali-date-converter@1.3.0/dist/nepali-date-converter.min.js"></script>
+        <!-- //cdn link of the nepali converter -->
+        <script src="app.js" defer></script>
+        <script src="nav.js" defer> </script>
+        <!-- defer waits till the full html is not opened  -->
 
 
 </body>
