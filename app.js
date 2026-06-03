@@ -4,17 +4,17 @@ let events = {};
 
 
 //loading of the events on the startup
-function loadEvents{
+function loadEvents() {
     const saved = localStorage.getItem('sathiEvents');
     if (saved) {
         try {
             events = JSON.parse(saved);
         } catch (e) {
-            events = ();
+            events = {};
         }
     }
     //If nothing has been saved then use the given demo data for the use demo
-    if (Object.keys(events).length === 0){
+    if (Object.keys(events).length === 0) {
         events = {
             '2083-03-15': [
                 { time: '10:00 AM', text: 'ops' },
@@ -41,9 +41,9 @@ function loadEvents{
         saveEvents();
     }
 }
-function saveEvents(){
+function saveEvents() {
     localStorage.setItem('sathiEvents', JSON.stringify(events));
-//
+    //
 }
 
 //we are creating  a function where the system gets the english date and converts it in the nepali date by mathmatical calulations  and pass the functions like currentDate.getyear(),currentdate.getmonth() and also getday()
@@ -87,6 +87,7 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 
 
 document.addEventListener('DOMContentLoaded', function () {
+    loadEvents(); // calling the load event function 
 
 
     const monthyear = document.getElementById('month-year');
@@ -209,19 +210,69 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         if (events[dateStr]) {
-            events[dateStr].forEach(event => {
+            events[dateStr].forEach((event,index) => {
                 const eventItem = document.createElement('div');
                 eventItem.className = 'event-item';
                 eventItem.innerHTML = `
                         <div class="event-color"></div>
                         <div class="event-time">${event.time}</div>
-                        <div class="event-text">${event.text}</div> `;
+                        <div class="event-text">${event.text}</div>
+                        <button class="delete-event-btn" data-index="${index}" title="Delete event"> Delete</button>
+                        `;// it adds the delete btn
                 eventList.appendChild(eventItem);
+            });
+
+            document.querySelectorAll('.delete-event-btn').forEach(btn => {
+                btn.addEventListener('click',(e) =>{
+                    e.stopPropagation(); // thi make the event handel right there and not pass to any parents so the parent don't get trigger out hai
+                    const idx = parseInt(btn.getAttribute('data-index')); 
+                    events[dateStr].splice(idx, 1); //duita combine vayera they help in deletion of the event 
+                    if(events[dateStr].length === 0){
+                        delete events[dateStr];
+                    }
+                    saveEvents();
+                    renderCalender();//help in updating the dots
+                    showEvents(dateStr);// re-rendering the list + form
+                });
             });
         } else {
             eventList.innerHTML = '<div class="no-events">No events scheduled for this day</div>';//if no event exists it shows this thing
 
         }
+        //add event form
+        const formDiv = document.createElement('div');
+        formDiv.className='add-event-form';
+        formDiv.innerHTML=`
+        <h4>Add New Event</h4>
+        <input type="text" id="new-event-time" placeholder="Time (e.g. 2:00 PM)" />
+        <input type="text" id="new-event-text" placeholder="Enter the event you have ? " />
+        <button id="add-event-btn">Add</button>
+        <div id="add-event-error" style="color:red; font-size:0.8rem; display:none;"></div>
+        `; //this adds the these html in the code and forms the event form
+        eventList.appendChild(formDiv);
+        
+        //add event listener to the add button 
+        document.getElementById('add-event-btn').addEventListener('click',() =>{
+            const timeINput = document.getElementById('new-event-time');
+            const textINput = document.getElementById('new-event-text');
+            const errorDiv = document.getElementById('add-event-error');
+
+            const time = timeINput.value.trim();//trim out the space
+            const text = textINput.value.trim();
+
+            if(!time || !text){//if user don't give the text or the time thi error is given 
+                errorDiv.textContent='Both time and dedescription chaiyo sathi.'
+                errorDiv.style.display='block';
+                return;
+            }
+            if(!events[dateStr]){
+                events[dateStr]=[];
+            }
+            events[dateStr].push({time,text});
+            saveEvents();
+            renderCalender();
+            showEvents(dateStr);
+        });
     }
     //when the previous month is clicked it goes to the previous month
     PrevMonthBtn.addEventListener('click', () => {
@@ -229,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let m = currentDate.getMonth();
         if (m === 0) { m = 11; y--; }
         else { m--; }
-        currentDate = new NepaliDate(y, m, 1); //creates the new nepali date for the previous month
+        currentDate = new NepaliDate(y, m, 1); //creates the new nepali date for thej previous month
         renderCalender(); //this renders the calender
         eventDate.textContent = 'select a date';
         eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
@@ -253,8 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentDate = new NepaliDate();
         selectedDate = new NepaliDate();//current date ra new date full jump garxw when clicked today btn
         const today = new NepaliDate();
-        const dateStr = `${today.getYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-
+        const dateStr = `${today.getYear()}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getDate().toString().padStart(2,'0')}`;//this help to fix padding of month and the day
         renderCalender();
         showEvents(dateStr);
 

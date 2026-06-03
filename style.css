@@ -670,3 +670,52 @@ hr {
 }
 
 
+/* css for the add and delete eveent btn */
+.delete-event-btn{
+    margin-left: auto;
+    background: none;
+    border:none;
+    color:var(--text);
+    font: 1.3rem;
+    cursor: pointer;
+    padding: 0 0.2em;
+    transition: color 0.2s;
+}
+.delete-event-btn:hover{
+    color:red; 
+    /* i added red for showing danger */
+}
+.add-event-form{
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--text); 
+    /* this thing will work like hr creating horizontal line  */
+    padding-top: 1rem;
+}
+.add-event-form h4{
+    margin-bottom: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: var(--dark);
+}
+.add-event-form input{
+    padding: 0.5rem;
+    margin-bottom: 13px; 
+    /* giving a good border for input of the user */
+    border-radius: 6px;
+    font-family: inherit;
+}
+.add-event-form button{
+    background: var(--dark);
+    color: var(--primary);
+    border: none;
+    padding: 0.5rem  1.2rem;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.add-event-form button:hover{
+    background: var(--accent);
+    color: white;
+}
