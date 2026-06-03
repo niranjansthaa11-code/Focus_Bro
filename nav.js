@@ -87,3 +87,28 @@ stop.addEventListener('click',stopTimer);
 reset.addEventListener('click',resetTimer);
 
 //for the gretting javascript 
+(function(){
+    const labelEl = document.getElementById('greeting-label');
+    const dateEl = document.getElementById('greeting-date');
+    const timeEl = document.getElementById('greeting-time');
+
+    //for the returning of the hour
+    function getGreeting(hour){
+        if(hour < 12) return 'Good Morning';
+        if(hour<17) return 'Good Afternoon';
+        return 'Good Evening';
+    }
+
+    function update(){
+        const now = new Date();
+        labelEl.textContent= getGreeting(now.getHours());
+        dateEl.textContent  = now.toLocaleDateString('en-US', {
+            weekday: 'long', month: 'long', day: 'numeric'
+        });
+        timeEl.textContent  = now.toLocaleTimeString('en-US', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
+    }
+    update();
+    setInterval(update,1000); // for setting the interval every 1 second....
+})();

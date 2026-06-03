@@ -1,12 +1,58 @@
 
+// for storing of the event 
+let events = {};
+
+
+//loading of the events on the startup
+function loadEvents{
+    const saved = localStorage.getItem('sathiEvents');
+    if (saved) {
+        try {
+            events = JSON.parse(saved);
+        } catch (e) {
+            events = ();
+        }
+    }
+    //If nothing has been saved then use the given demo data for the use demo
+    if (Object.keys(events).length === 0){
+        events = {
+            '2083-03-15': [
+                { time: '10:00 AM', text: 'ops' },
+                { time: '02:30 PM', text: 'Project review' }
+            ],
+            '2083-03-20': [
+                { time: '11:02 AM', text: 'feroug appointment' }
+            ],
+            '2083-03-25': [
+                { time: '07:00 PM', text: 'Birthday party lima' },
+                { time: '09:00 PM', text: 'Dinner with friends on denevo' }
+            ],
+            '2083-03-2': [
+                { time: '03:00 PM', text: 'video' }
+            ],
+            '2083-03-10': [
+                { time: 'All day', text: 'exams' }
+            ],
+            '2083-04-18': [
+                { time: '12:00 PM', text: 'Lunch with client' },
+                { time: '04:00 PM', text: 'photoshoot' }
+            ]
+        };
+        saveEvents();
+    }
+}
+function saveEvents(){
+    localStorage.setItem('sathiEvents', JSON.stringify(events));
+//
+}
 
 //we are creating  a function where the system gets the english date and converts it in the nepali date by mathmatical calulations  and pass the functions like currentDate.getyear(),currentdate.getmonth() and also getday()
 if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry exists
-    console.error('NepaliDate library not loaded! Using fallback...'); 
-    window.NepaliDate = function(year, month, day) { //new function creation fo the backup if nepalidate doesn't exists
+    console.error('NepaliDate library not loaded! Using fallback...');
+    window.NepaliDate = function (year, month, day) { //new function creation fo the backup if nepalidate doesn't exists
         // we are extracting the english date for the conversion 
         const today = new Date();
-        const engYear = today.getFullYear(); 
+        const engYear = today.getFullYear();
         const engMonth = today.getMonth();
         const engDay = today.getDate();
         //if no datea is passed about year this function runs 
@@ -20,32 +66,23 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
             this._month = month || 0; // || o means if nothing given use 0 as default
             this._day = day || 1;
         }
-        
+
         //these create functions that return stored values like when the funciton calls this.year it returns the values in .getyear()
-        this.getYear = function() { return this._year; };
-        this.getMonth = function() { return this._month; };
-        this.getDate = function() { return this._day; };
+        this.getYear = function () { return this._year; };
+        this.getMonth = function () { return this._month; };
+        this.getDate = function () { return this._day; };
 
         //it converts the nepali date back to english date to figure out the day of week
-        this.getDay = function() { 
+        this.getDay = function () {
             const d = new Date(this._year - 57, this._month - 8, this._day - 16);
             return d.getDay();  //this returns 0-6 values 
         };
-        
+
         // this helps to create an aray of how many days each month has 
         const daysInMonths = [31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30];
         this.daysInMonth = daysInMonths[this._month] || 30; //the days in month is compared with the months and if there is no data about how many days then returns default 30;
     };
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -63,33 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentDate = new NepaliDate();
     console.log(currentDate);
     let selectedDate = null;
-    
-
-
-    //adding the sample events for trying 
-    const events = {
-        '2083-03-15': [
-            { time: '10:00 AM', text: 'ops' },
-            { time: '02:30 PM', text: 'Project review' }
-        ],
-        '2083-03-20': [
-            { time: '11:02 AM', text: 'feroug appointment' }
-        ],
-        '2083-03-25': [
-            { time: '07:00 PM', text: 'Birthday party lima' },
-            { time: '09:00 PM', text: 'Dinner with friends on denevo' }
-        ],
-        '2083-03-2': [
-            { time: '03:00 PM', text: 'video' }
-        ],
-        '2083-03-10': [
-            { time: 'All day', text: 'exams' }
-        ],
-        '2083-04-18': [
-            { time: '12:00 PM', text: 'Lunch with client' },
-            { time: '04:00 PM', text: 'photoshoot' }
-        ]
-    };
 
     // let us first render the calender function 
     function renderCalender() {
@@ -255,9 +265,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     renderCalender();
     console.log("Current Nepali Date:", {
-    year: currentDate.getYear(),
-    month: currentDate.getMonth(),        
-    date: currentDate.getDate(),
-    day: currentDate.getDay()
-});
+        year: currentDate.getYear(),
+        month: currentDate.getMonth(),
+        date: currentDate.getDate(),
+        day: currentDate.getDay()
+    });
 });
