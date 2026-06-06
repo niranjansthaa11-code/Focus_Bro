@@ -921,3 +921,5 @@ body:has(#sidebar.close) #focus-overlay {
         transform: scale(1);
     }
 }
+
+/* authorization css  */

@@ -5,45 +5,38 @@ let events = {};
 
 //loading of the events on the startup
 function loadEvents() {
-    const saved = localStorage.getItem('sathiEvents');
-    if (saved) {
-        try {
-            events = JSON.parse(saved);
-        } catch (e) {
-            events = {};
-        }
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)return;//if user no login ther eis no data sooo 
+        const { data, error } = await sb.from('events').select('*').eq('user_id', session.user.id);
+        //select ley chahi sab coloumns selct garxw and eq filters out the rows that matches the users id 
+            if (error) { console.error(error); return; } //console ma error dekhauxw and returns it 
+
+            events={};
+            data.forEach(row=>{
+                if (!events[row.date_key]) events[row.date_key] = [];
+                events[row.date_key].push({id:row.id,time:row.time,text:row.text})
+            });    
     }
-    //If nothing has been saved then use the given demo data for the use demo
-    if (Object.keys(events).length === 0) {
-        events = {
-            '2083-03-15': [
-                { time: '10:00 AM', text: 'ops' },
-                { time: '02:30 PM', text: 'Project review' }
-            ],
-            '2083-03-20': [
-                { time: '11:02 AM', text: 'feroug appointment' }
-            ],
-            '2083-03-25': [
-                { time: '07:00 PM', text: 'Birthday party lima' },
-                { time: '09:00 PM', text: 'Dinner with friends on denevo' }
-            ],
-            '2083-03-2': [
-                { time: '03:00 PM', text: 'video' }
-            ],
-            '2083-03-10': [
-                { time: 'All day', text: 'exams' }
-            ],
-            '2083-04-18': [
-                { time: '12:00 PM', text: 'Lunch with client' },
-                { time: '04:00 PM', text: 'photoshoot' }
-            ]
-        };
-        saveEvents();
+    //function that takes three parameters and help insert the event in the database 
+function saveEvents(datekey,time,text) {
+    const{data:{session}}=await sb.auth.getSession();
+    const {data,error}=await sb.from('events').insert({
+        user_id: session.user.id,
+        date_key:dateKey,
+        time,
+        text
+    }).select().single(); //single cause we want the single object instead of the array itself 
+    if(!error){
+        if(!events[dateKey]) events[dateKey]=[];
+        events[dateKey].push({id: data.id ,time,text}); //for local sysnc of the data to the database...
     }
-}
-function saveEvents() {
-    localStorage.setItem('sathiEvents', JSON.stringify(events));
     //
+}
+
+async function deleteEvent(id,dateKey,idx){
+    await sb.from('events').delete().eq('id',id); //requests the supabase for the delete 
+    events[dateKey].splice(idx,1);//idx is where data is stored locaiton 
+    if(events[dateKey].length === 0) delete events[dateKey];
 }
 
 //we are creating  a function where the system gets the english date and converts it in the nepali date by mathmatical calulations  and pass the functions like currentDate.getyear(),currentdate.getmonth() and also getday()
