@@ -22,7 +22,7 @@
                 </button>
             </li>
             <li class="active">
-                <a href="home">
+                <a href="index.html">
                     <i class="fa-solid fa-house"></i>
                     <span>Home</span></a>
             </li>
@@ -61,7 +61,7 @@
                         width="24px" fill="#e3e3e3">
                         <path
                             d="M655-200 513-342l56-56 85 85 170-170 56 57-225 226Zm0-320L513-662l56-56 85 85 170-170 56 57-225 226ZM80-280v-80h360v80H80Zm0-320v-80h360v80H80Z" />
-                    </svg><span>Tasks to do</span></a></li>
+                    </svg><span>Tasks You did !!</span></a></li>
 
             <li><a href="Ai help"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                         width="24px" fill="#e3e3e3">
@@ -118,7 +118,12 @@
             <div class="event-panel" id="event-panel">
                 <div class="event-header">
                     <div class="event-date" id="event-date">Select a date</div>
-                    <i class="fas fa-calendar-alt event-icon"></i>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <i class="fas fa-calendar-alt event-icon"></i>
+                        <button class="add-event-toggle-btn" id="add-event-toggle" title="Add event">
+                            <i class="fa-solid fa-circle-plus"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="event-list" id="event-list">
                     <div class="no-events"> Please select a date to view them here</div>

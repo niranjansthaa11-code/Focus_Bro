@@ -210,24 +210,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         if (events[dateStr]) {
-            events[dateStr].forEach((event,index) => {
+            events[dateStr].forEach((event, index) => {
                 const eventItem = document.createElement('div');
                 eventItem.className = 'event-item';
                 eventItem.innerHTML = `
                         <div class="event-color"></div>
                         <div class="event-time">${event.time}</div>
                         <div class="event-text">${event.text}</div>
-                        <button class="delete-event-btn" data-index="${index}" title="Delete event"> Delete</button>
+                        <button class="delete-event-btn" data-index="${index}" title="Delete event"><i class="fa-solid fa-delete-left"></i> Delete</button>
                         `;// it adds the delete btn
                 eventList.appendChild(eventItem);
             });
 
             document.querySelectorAll('.delete-event-btn').forEach(btn => {
-                btn.addEventListener('click',(e) =>{
+                btn.addEventListener('click', (e) => {
                     e.stopPropagation(); // thi make the event handel right there and not pass to any parents so the parent don't get trigger out hai
-                    const idx = parseInt(btn.getAttribute('data-index')); 
+                    const idx = parseInt(btn.getAttribute('data-index'));
                     events[dateStr].splice(idx, 1); //duita combine vayera they help in deletion of the event 
-                    if(events[dateStr].length === 0){
+                    if (events[dateStr].length === 0) {
                         delete events[dateStr];
                     }
                     saveEvents();
@@ -240,19 +240,82 @@ document.addEventListener('DOMContentLoaded', function () {
 
         }
         //add event form
+        const togglebtn = document.getElementById('add-event-toggle');
+        const newToggleBtn = togglebtn.cloneNode(true); // her eclone node is removing the old listeners
+        togglebtn.parentNode.replaceChild(newToggleBtn, togglebtn);
+        newToggleBtn.style.display = 'flex';
+
+        //adding the event form 
         const formDiv = document.createElement('div');
-        formDiv.className='add-event-form';
-        formDiv.innerHTML=`
-        <h4>Add New Event</h4>
-        <input type="text" id="new-event-time" placeholder="Time (e.g. 2:00 PM)" />
-        <input type="text" id="new-event-text" placeholder="Enter the event you have ? " />
-        <button id="add-event-btn">Add</button>
-        <div id="add-event-error" style="color:red; font-size:0.8rem; display:none;"></div>
-        `; //this adds the these html in the code and forms the event form
+        formDiv.className = 'add-event-form';
+        formDiv.innerHTML = `<h4>Add New TASK</h4>
+    <select id="new-event-time">
+    <option value="">.... Select Time....</option>
+    <option value="12:00 AM">12:00 AM</option>
+    <option value="12:30 AM">12:30 AM</option>
+    <option value="1:00 AM">1:00 AM</option>
+    <option value="1:30 AM">1:30 AM</option>
+    <option value="2:00 AM">2:00 AM</option>
+    <option value="2:30 AM">2:30 AM</option>
+    <option value="3:00 AM">3:00 AM</option>
+    <option value="3:30 AM">3:30 AM</option>
+    <option value="4:00 AM">4:00 AM</option>
+    <option value="4:30 AM">4:30 AM</option>
+    <option value="5:00 AM">5:00 AM</option>
+    <option value="5:30 AM">5:30 AM</option>
+    <option value="6:00 AM">6:00 AM</option>
+    <option value="6:30 AM">6:30 AM</option>
+    <option value="7:00 AM">7:00 AM</option>
+    <option value="7:30 AM">7:30 AM</option>
+    <option value="8:00 AM">8:00 AM</option>
+    <option value="8:30 AM">8:30 AM</option>
+    <option value="9:00 AM">9:00 AM</option>
+    <option value="9:30 AM">9:30 AM</option>
+    <option value="10:00 AM">10:00 AM</option>
+    <option value="10:30 AM">10:30 AM</option>
+    <option value="11:00 AM">11:00 AM</option>
+    <option value="11:30 AM">11:30 AM</option>
+    <option value="12:00 PM">12:00 PM</option>
+    <option value="12:30 PM">12:30 PM</option>
+    <option value="1:00 PM">1:00 PM</option>
+    <option value="1:30 PM">1:30 PM</option>
+    <option value="2:00 PM">2:00 PM</option>
+    <option value="2:30 PM">2:30 PM</option>
+    <option value="3:00 PM">3:00 PM</option>
+    <option value="3:30 PM">3:30 PM</option>
+    <option value="4:00 PM">4:00 PM</option>
+    <option value="4:30 PM">4:30 PM</option>
+    <option value="5:00 PM">5:00 PM</option>
+    <option value="5:30 PM">5:30 PM</option>
+    <option value="6:00 PM">6:00 PM</option>
+    <option value="6:30 PM">6:30 PM</option>
+    <option value="7:00 PM">7:00 PM</option>
+    <option value="7:30 PM">7:30 PM</option>
+    <option value="8:00 PM">8:00 PM</option>
+    <option value="8:30 PM">8:30 PM</option>
+    <option value="9:00 PM">9:00 PM</option>
+    <option value="9:30 PM">9:30 PM</option>
+    <option value="10:00 PM">10:00 PM</option>
+    <option value="10:30 PM">10:30 PM</option>
+    <option value="11:00 PM">11:00 PM</option>
+    <option value="11:30 PM">11:30 PM</option>
+    <option value="All Day">All Day</option>
+</select>
+    <input type="text" id="new-event-text" placeholder="Enter the Task you have?" />
+    <button id="add-event-btn">Add</button>
+    <div id="add-event-error" style="color:red; font-size:0.8rem; display:none;"></div>`
+
         eventList.appendChild(formDiv);
-        
+        //toggle btn open close on +click
+        newToggleBtn.addEventListener('click', () => {
+            const isVisible = formDiv.classList.toggle('visible');//changes css to visble styling 
+            const icon = newToggleBtn.queryselector('i');
+            icon.classList.toggle('fa-circle-plus', !isVisible);
+            icon.classList.toggle('fa-circle-minus', isVisible);
+        })
+
         //add event listener to the add button 
-        document.getElementById('add-event-btn').addEventListener('click',() =>{
+        document.getElementById('add-event-btn').addEventListener('click', () => {
             const timeINput = document.getElementById('new-event-time');
             const textINput = document.getElementById('new-event-text');
             const errorDiv = document.getElementById('add-event-error');
@@ -260,15 +323,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const time = timeINput.value.trim();//trim out the space
             const text = textINput.value.trim();
 
-            if(!time || !text){//if user don't give the text or the time thi error is given 
-                errorDiv.textContent='Both time and dedescription chaiyo sathi.'
-                errorDiv.style.display='block';
+            if (!time || !text) {//if user don't give the text or the time thi error is given 
+                errorDiv.textContent = 'Both time and dedescription chaiyo sathi.'
+                errorDiv.style.display = 'block';
                 return;
             }
-            if(!events[dateStr]){
-                events[dateStr]=[];
+            if (!events[dateStr]) {
+                events[dateStr] = [];
             }
-            events[dateStr].push({time,text});
+            events[dateStr].push({ time, text });
             saveEvents();
             renderCalender();
             showEvents(dateStr);
@@ -304,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentDate = new NepaliDate();
         selectedDate = new NepaliDate();//current date ra new date full jump garxw when clicked today btn
         const today = new NepaliDate();
-        const dateStr = `${today.getYear()}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getDate().toString().padStart(2,'0')}`;//this help to fix padding of month and the day
+        const dateStr = `${today.getYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;//this help to fix padding of month and the day
         renderCalender();
         showEvents(dateStr);
 

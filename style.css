@@ -535,6 +535,52 @@ body {
     border-bottom: 2px solid #1C1A18;
 }
 
+.add-event-toggle-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4caf50;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+.add-event-toggle-btn:hover{
+    transform: scale(1.1);
+    color: #388e3c;
+}
+.add-event-form{
+    margin-top: 1.5rem ;
+    border-top:1px solid var(--text);
+    padding-top: 1rem;
+    display: none;
+}
+.add-event-form.visible{
+    display: block;
+}
+.add-event-form select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 13px;
+    border-radius: 6px;
+    font-family: inherit;
+    border: 1px solid var(--accent);
+    background: var(--light);
+    color: var(--dark);
+    cursor: pointer;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+}
+
+.add-event-form select:focus , .add-event-form input:focus{
+    /* focus mean user has tapped it alrght */
+    outline: none;
+    border-color: var(--today);
+}
+
 .event-date {
     font-weight: 600;
     font-size: 1rem;
@@ -607,6 +653,17 @@ body {
 .event-text {
     font-size: 0.9rem;
     color: var(--dark);
+}
+
+
+.event-list {
+    scrollbar-width: none;
+     /* for firefox */
+}
+
+.event-list::-webkit-scrollbar {
+    display: none; 
+    /* Chrome, Safari */
 }
 
 
@@ -729,11 +786,20 @@ body {
 }
 
 .add-event-form input {
+    width: 100%;
     padding: 0.5rem;
     margin-bottom: 13px;
     /* giving a good border for input of the user */
     border-radius: 6px;
     font-family: inherit;
+    border: 1px solid var(--accent);
+    background: var(--light);
+    color: var(--dark);
+    cursor: pointer;
+}
+.add-event-form select{
+    appearance: none;
+
 }
 
 .add-event-form button {
