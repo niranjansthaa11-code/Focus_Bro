@@ -34,9 +34,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 4px 20px;
-    border-bottom: 10px white;
-    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.07);
     width: 100%;
+    margin-bottom:30px ;
 }
 
 .greeting-text {
@@ -76,12 +76,13 @@ body {
     text-transform: uppercase;
 
 }
+
 /* for achievemtn badge  */
 .achievement-badge {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: rgba(184,159,122,0.12);
+    background: rgba(184, 159, 122, 0.12);
     color: var(--accent);
     padding: 6px 14px;
     border-radius: 50px;
@@ -118,6 +119,9 @@ body {
 
 #sidebar ul {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 #sidebar>ul>li:first-child {
@@ -549,7 +553,7 @@ body {
     border-bottom: 2px solid #1C1A18;
 }
 
-.add-event-toggle-btn{
+.add-event-toggle-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -561,19 +565,23 @@ body {
     padding: 0;
     line-height: 1;
 }
-.add-event-toggle-btn:hover{
+
+.add-event-toggle-btn:hover {
     transform: scale(1.1);
     color: #388e3c;
 }
-.add-event-form{
-    margin-top: 1.5rem ;
-    border-top:1px solid var(--text);
+
+.add-event-form {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--text);
     padding-top: 1rem;
     display: none;
 }
-.add-event-form.visible{
+
+.add-event-form.visible {
     display: block;
 }
+
 .add-event-form select {
     width: 100%;
     padding: 0.5rem;
@@ -589,7 +597,8 @@ body {
     background-position: right 0.8rem center;
 }
 
-.add-event-form select:focus , .add-event-form input:focus{
+.add-event-form select:focus,
+.add-event-form input:focus {
     /* focus mean user has tapped it alrght */
     outline: none;
     border-color: var(--today);
@@ -672,11 +681,11 @@ body {
 
 .event-list {
     scrollbar-width: none;
-     /* for firefox */
+    /* for firefox */
 }
 
 .event-list::-webkit-scrollbar {
-    display: none; 
+    display: none;
     /* Chrome, Safari */
 }
 
@@ -736,7 +745,7 @@ body {
 
 }
 
-.pomo-btn-wrapper1{
+.pomo-btn-wrapper1 {
     display: flex;
     gap: 6px;
     padding: 6px 10px;
@@ -783,6 +792,7 @@ body {
     color: red;
     /* i added red for showing danger */
 }
+
 .complete-event-btn {
     background: none;
     border: none;
@@ -837,7 +847,8 @@ body {
     color: var(--dark);
     cursor: pointer;
 }
-.add-event-form select{
+
+.add-event-form select {
     appearance: none;
 
 }
@@ -963,17 +974,18 @@ body:has(#sidebar.close) #focus-overlay {
 }
 
 /* authorization css  */
-#auth-modal{
+#auth-modal {
     position: fixed;
     inset: 0;
     background: var(--dark);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999; 
+    z-index: 999;
     /* for makingit lie at the top of the top */
 }
-.auth-box{
+
+.auth-box {
     background: #252220;
     padding: 2.6rem;
     border-radius: 20px;
@@ -982,52 +994,60 @@ body:has(#sidebar.close) #focus-overlay {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(255, 255, 255, 0.07);
 }
-.auth-title{
+
+.auth-title {
     font-size: 1.8rem;
     font-weight: 900;
     color: var(--primary);
     text-align: center;
 }
-.auth-sub{
-    color: rgba(255,255,255,0.35);
+
+.auth-sub {
+    color: rgba(255, 255, 255, 0.35);
     text-align: center;
     font-size: 0.85rem;
 }
-.auth-tabs{
+
+.auth-tabs {
     display: flex;
     gap: 0.8rem;
 }
-.auth-tab{
+
+.auth-tab {
     flex: 1;
     padding: 0.5rem;
     border: none;
     border-radius: 10px;
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.4);
-    font-weight:700;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
 }
-.auth-tab.active{
+
+.auth-tab.active {
     background: var(--accent);
     color: var(--dark);
 }
-.auth-box input:focus{
+
+.auth-box input:focus {
     outline: none;
     border-color: var(--accent);
 }
-.auth-box input{
+
+.auth-box input {
     padding: 0.7rem 1rem;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
     color: var(--primary);
     font-family: inherit;
     font-size: 0.9rem;
 }
-.auth-box > button{
+
+.auth-box>button {
     padding: 0.75rem;
     border-radius: 10px;
     border: none;
@@ -1038,13 +1058,14 @@ body:has(#sidebar.close) #focus-overlay {
     cursor: pointer;
     transition: background 0.2s;
 }
-auth-box > button:hover{
+
+auth-box>button:hover {
     /* here the css selector targets the every button that is a direct child of an element wiht the class auth-box */
     background: var(--today);
 }
 
 /* for achievement panel */
-.achevement-panel{
+.achievement-panel {
     position: fixed;
     top: 0;
     right: 0;
@@ -1057,13 +1078,44 @@ auth-box > button:hover{
     overflow-y: auto;
     animation: slideIn 0.3 ease;
 }
+
 @keyframes slideIn {
-    from{transform:translateX(100%)}
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
-to{
-    transform: translateX(0);
-}
-.achievement-pannel-header-h2{
+
+.achievement-pannel-header-h2 {
     color: var(--accent);
     font-size: 1.2rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.875rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-info i {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+}
+
+.user-info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#opp{
+    margin-top: auto;
 }
