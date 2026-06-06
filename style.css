@@ -34,7 +34,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 4px 20px;
-    border-bottom: 1px solidrgba(255, 255, 255, 0.07);
+    border-bottom: 10px white;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -1041,4 +1041,29 @@ body:has(#sidebar.close) #focus-overlay {
 auth-box > button:hover{
     /* here the css selector targets the every button that is a direct child of an element wiht the class auth-box */
     background: var(--today);
+}
+
+/* for achievement panel */
+.achevement-panel{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 380px;
+    background: #252220;
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 2rem;
+    z-index: 998;
+    overflow-y: auto;
+    animation: slideIn 0.3 ease;
+}
+@keyframes slideIn {
+    from{transform:translateX(100%)}
+}
+to{
+    transform: translateX(0);
+}
+.achievement-pannel-header-h2{
+    color: var(--accent);
+    font-size: 1.2rem;
 }

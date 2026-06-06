@@ -90,7 +90,7 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 
 
 
-document.addEventListener('DOMContentLoaded',  function () {
+document.addEventListener('DOMContentLoaded', function () {
     loadEvents(); // calling the load event function 
     updateAchievementCount();
 
@@ -105,6 +105,49 @@ document.addEventListener('DOMContentLoaded',  function () {
     let currentDate = new NepaliDate();
     console.log(currentDate);
     let selectedDate = null;
+    let selectedDateStr = null;
+
+    // Achievement panel toggle for viewing on same html
+    document.getElementById('achievement-btn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const panel = document.getElementById('achievement-panel');
+        panel.style.display = 'block';
+
+        const { data: { session } } = await sb.auth.getSession();
+        if (!session) return;
+
+        const { data, error } = await sb.from('achievements')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .order('completed_at', { ascending: false });
+
+        if (error) { console.error(error); return; }
+
+        document.getElementById('achievement-count-display').textContent =
+            `Total completed: ${data.length} tasks`;
+
+        const listEl = document.getElementById('achievement-list');
+
+        if (data.length === 0) {
+            listEl.innerHTML = '<p style="opacity:0.5; font-style:italic;">No achievements yet. Complete a task to see it here!</p>';
+            return;
+        }
+
+        listEl.innerHTML = data.map(a => `
+            <div class="event-item" style="background:#1C1A18; border-left:4px solid #4CAF50; margin-bottom:0.8rem;">
+                <div class="event-color" style="background:#4CAF50"></div>
+                <div class="event-time">${a.time}</div>
+                <div class="event-text" style="color:var(--primary)">${a.text}</div>
+                <div style="margin-left:auto; font-size:0.72rem; color:var(--text); white-space:nowrap;">
+                    ${a.date_key}
+                </div>
+            </div>
+        `).join('');
+    });
+
+    document.getElementById('close-achievement').addEventListener('click', () => {
+        document.getElementById('achievement-panel').style.display = 'none';
+    });
 
     // let us first render the calender function 
     function renderCalender() {
@@ -189,6 +232,7 @@ document.addEventListener('DOMContentLoaded',  function () {
                 const dateStr = day.getAttribute('data-date'); //this helps to read the string
                 const [y, m, d] = dateStr.split('-').map(Number);//split tags splits the date into year month and days
                 selectedDate = new NepaliDate(y, m - 1, d);//.map converts each to a real number
+                selectedDateStr = dateStr;
                 renderCalender();
                 showEvents(dateStr);//helps in displaying the days event on the panel
             });
@@ -228,14 +272,11 @@ document.addEventListener('DOMContentLoaded',  function () {
             });
 
             document.querySelectorAll('.delete-event-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', async (e) => {
                     e.stopPropagation(); // thi make the event handel right there and not pass to any parents so the parent don't get trigger out hai
                     const idx = parseInt(btn.getAttribute('data-index'));
-                    events[dateStr].splice(idx, 1); //duita combine vayera they help in deletion of the event 
-                    if (events[dateStr].length === 0) {
-                        delete events[dateStr];
-                    }
-                    saveEvents();
+                    const event = events[dateStr][idx];
+                    await deleteEvent(event.id, dateStr, idx);
                     renderCalender();//help in updating the dots
                     showEvents(dateStr);// re-rendering the list + form
                 });
@@ -268,27 +309,24 @@ document.addEventListener('DOMContentLoaded',  function () {
 
             });
 
-        });
+        })
+
+
+    }
 
 
 
 
+//add event form
+const togglebtn = document.getElementById('add-event-toggle');
+const newToggleBtn = togglebtn.cloneNode(true); // her eclone node is removing the old listeners
+togglebtn.parentNode.replaceChild(newToggleBtn, togglebtn);
+newToggleBtn.style.display = 'flex';
 
-
-
-
-
-
-        //add event form
-        const togglebtn = document.getElementById('add-event-toggle');
-        const newToggleBtn = togglebtn.cloneNode(true); // her eclone node is removing the old listeners
-        togglebtn.parentNode.replaceChild(newToggleBtn, togglebtn);
-        newToggleBtn.style.display = 'flex';
-
-        //adding the event form 
-        const formDiv = document.createElement('div');
-        formDiv.className = 'add-event-form';
-        formDiv.innerHTML = `<h4>Add New TASK</h4>
+//adding the event form 
+const formDiv = document.createElement('div');
+formDiv.className = 'add-event-form';
+formDiv.innerHTML = `<h4>Add New TASK</h4>
     <select id="new-event-time">
     <option value="">.... Select Time....</option>
     <option value="12:00 AM">12:00 AM</option>
@@ -345,82 +383,84 @@ document.addEventListener('DOMContentLoaded',  function () {
     <button id="add-event-btn">Add</button>
     <div id="add-event-error" style="color:red; font-size:0.8rem; display:none;"></div>`
 
-        eventList.appendChild(formDiv);
-        //toggle btn open close on +click
-        newToggleBtn.addEventListener('click', () => {
-            const isVisible = formDiv.classList.toggle('visible');//changes css to visble styling 
-            const icon = newToggleBtn.queryselector('i');
-            icon.classList.toggle('fa-circle-plus', !isVisible);
-            icon.classList.toggle('fa-circle-minus', isVisible);
-        })
+eventList.appendChild(formDiv);
+//toggle btn open close on +click
+newToggleBtn.addEventListener('click', () => {
+    const isVisible = formDiv.classList.toggle('visible');//changes css to visble styling 
+    const icon = newToggleBtn.querySelector('i');
+    icon.classList.toggle('fa-circle-plus', !isVisible);
+    icon.classList.toggle('fa-circle-minus', isVisible);
+})
 
-        //add event listener to the add button 
-        document.getElementById('add-event-btn').addEventListener('click', () => {
-            const timeINput = document.getElementById('new-event-time');
-            const textINput = document.getElementById('new-event-text');
-            const errorDiv = document.getElementById('add-event-error');
+//add event listener to the add button 
+document.getElementById('add-event-btn').addEventListener('click', async () => {
+    const timeINput = document.getElementById('new-event-time');
+    const textINput = document.getElementById('new-event-text');
+    const errorDiv = document.getElementById('add-event-error');
 
-            const time = timeINput.value.trim();//trim out the space
-            const text = textINput.value.trim();
+    const time = timeINput.value.trim();//trim out the space
+    const text = textINput.value.trim();
 
-            if (!time || !text) {//if user don't give the text or the time thi error is given 
-                errorDiv.textContent = 'Both time and dedescription chaiyo sathi.'
-                errorDiv.style.display = 'block';
-                return;
-            }
-            if (!events[dateStr]) {
-                events[dateStr] = [];
-            }
-            events[dateStr].push({ time, text });
-            saveEvents();
-            renderCalender();
-            showEvents(dateStr);
-        });
+    if (!time || !text) {//if user don't give the text or the time thi error is given 
+        errorDiv.textContent = 'Both time and description chaiyo sathi.'
+        errorDiv.style.display = 'block';
+        return;
     }
-    //when the previous month is clicked it goes to the previous month
-    PrevMonthBtn.addEventListener('click', () => {
-        let y = currentDate.getYear();
-        let m = currentDate.getMonth();
-        if (m === 0) { m = 11; y--; }
-        else { m--; }
-        currentDate = new NepaliDate(y, m, 1); //creates the new nepali date for thej previous month
-        renderCalender(); //this renders the calender
-        eventDate.textContent = 'select a date';
-        eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
-    });
-
-    //when the next month is clicked it goes to the next month 
-    NextMonthbtn.addEventListener('click', () => {
-        let y = currentDate.getYear();
-        let m = currentDate.getMonth();
-        if (m === 11) { m = 0; y++; }
-        else { m++; }
-        currentDate = new NepaliDate(y, m, 1)
-        renderCalender();
-        eventDate.textContent = 'select a date';
-        eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
-    });
-
-    //when today btn is clicked 
-    //also attches the click event to the today button
-    todaybtn.addEventListener('click', () => {
-        currentDate = new NepaliDate();
-        selectedDate = new NepaliDate();//current date ra new date full jump garxw when clicked today btn
-        const today = new NepaliDate();
-        const dateStr = `${today.getYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;//this help to fix padding of month and the day
-        renderCalender();
-        showEvents(dateStr);
-
-        //initialization of the calender
-        //this creates a calender here
-
-
-    });
+    if (!selectedDateStr) {
+        errorDiv.textContent = 'Please select a date first.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    await saveEvents(selectedDateStr, time, text);
     renderCalender();
-    console.log("Current Nepali Date:", {
-        year: currentDate.getYear(),
-        month: currentDate.getMonth(),
-        date: currentDate.getDate(),
-        day: currentDate.getDay()
-    });
+    showEvents(selectedDateStr);
+});
+
+//when the previous month is clicked it goes to the previous month
+PrevMonthBtn.addEventListener('click', () => {
+    let y = currentDate.getYear();
+    let m = currentDate.getMonth();
+    if (m === 0) { m = 11; y--; }
+    else { m--; }
+    currentDate = new NepaliDate(y, m, 1); //creates the new nepali date for thej previous month
+    renderCalender(); //this renders the calender
+    eventDate.textContent = 'select a date';
+    eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
+});
+
+//when the next month is clicked it goes to the next month 
+NextMonthbtn.addEventListener('click', () => {
+    let y = currentDate.getYear();
+    let m = currentDate.getMonth();
+    if (m === 11) { m = 0; y++; }
+    else { m++; }
+    currentDate = new NepaliDate(y, m, 1)
+    renderCalender();
+    eventDate.textContent = 'select a date';
+    eventList.innerHTML = '<div class="no-events">Select a date with events to view them here</div>';
+});
+
+//when today btn is clicked 
+//also attches the click event to the today button
+todaybtn.addEventListener('click', () => {
+    currentDate = new NepaliDate();
+    selectedDate = new NepaliDate();//current date ra new date full jump garxw when clicked today btn
+    const today = new NepaliDate();
+    const dateStr = `${today.getYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;//this help to fix padding of month and the day
+    renderCalender();
+    selectedDateStr = dateStr;
+    showEvents(dateStr);
+
+    //initialization of the calender
+    //this creates a calender here
+
+
+});
+renderCalender();
+console.log("Current Nepali Date:", {
+    year: currentDate.getYear(),
+    month: currentDate.getMonth(),
+    date: currentDate.getDate(),
+    day: currentDate.getDay()
+});
 });
