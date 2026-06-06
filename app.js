@@ -4,40 +4,51 @@ let events = {};
 
 
 //loading of the events on the startup
-function loadEvents() {
-    const {data:{session}}=await sb.auth.getSession();
-    if(!session)return;//if user no login ther eis no data sooo 
-        const { data, error } = await sb.from('events').select('*').eq('user_id', session.user.id);
-        //select ley chahi sab coloumns selct garxw and eq filters out the rows that matches the users id 
-            if (error) { console.error(error); return; } //console ma error dekhauxw and returns it 
+async function loadEvents() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;//if user no login ther eis no data sooo 
+    const { data, error } = await sb.from('events').select('*').eq('user_id', session.user.id);
+    //select ley chahi sab coloumns selct garxw and eq filters out the rows that matches the users id 
+    if (error) { console.error(error); return; } //console ma error dekhauxw and returns it 
 
-            events={};
-            data.forEach(row=>{
-                if (!events[row.date_key]) events[row.date_key] = [];
-                events[row.date_key].push({id:row.id,time:row.time,text:row.text})
-            });    
-    }
-    //function that takes three parameters and help insert the event in the database 
-function saveEvents(datekey,time,text) {
-    const{data:{session}}=await sb.auth.getSession();
-    const {data,error}=await sb.from('events').insert({
+    events = {};
+    data.forEach(row => {
+        if (!events[row.date_key]) events[row.date_key] = [];
+        events[row.date_key].push({ id: row.id, time: row.time, text: row.text })
+    });
+}
+//function that takes three parameters and help insert the event in the database 
+async function saveEvents(dateKey, time, text) {
+    const { data: { session } } = await sb.auth.getSession();
+    const { data, error } = await sb.from('events').insert({
         user_id: session.user.id,
-        date_key:dateKey,
+        date_key: dateKey,
         time,
         text
     }).select().single(); //single cause we want the single object instead of the array itself 
-    if(!error){
-        if(!events[dateKey]) events[dateKey]=[];
-        events[dateKey].push({id: data.id ,time,text}); //for local sysnc of the data to the database...
+    if (!error) {
+        if (!events[dateKey]) events[dateKey] = [];
+        events[dateKey].push({ id: data.id, time, text }); //for local sysnc of the data to the database...
     }
     //
 }
 
-async function deleteEvent(id,dateKey,idx){
-    await sb.from('events').delete().eq('id',id); //requests the supabase for the delete 
-    events[dateKey].splice(idx,1);//idx is where data is stored locaiton 
-    if(events[dateKey].length === 0) delete events[dateKey];
+async function deleteEvent(id, dateKey, idx) {
+    await sb.from('events').delete().eq('id', id); //requests the supabase for the delete 
+    events[dateKey].splice(idx, 1);//idx is where data is stored locaiton 
+    if (events[dateKey].length === 0) delete events[dateKey];
 }
+async function updateAchievementCount() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    const { count } = await sb.from('achievements')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', session.user.id);
+    document.getElementById('achievement-count').textContent = count || 0;
+}
+
+
+
 
 //we are creating  a function where the system gets the english date and converts it in the nepali date by mathmatical calulations  and pass the functions like currentDate.getyear(),currentdate.getmonth() and also getday()
 if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry exists
@@ -79,9 +90,9 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded',  function () {
     loadEvents(); // calling the load event function 
-
+    updateAchievementCount();
 
     const monthyear = document.getElementById('month-year');
     const daysel = document.getElementById('days');
@@ -210,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="event-color"></div>
                         <div class="event-time">${event.time}</div>
                         <div class="event-text">${event.text}</div>
+                            <button class="complete-event-btn" data-index="${index}" title="Mark complete"><i class="fa-solid fa-circle-check"></i></button>
                         <button class="delete-event-btn" data-index="${index}" title="Delete event"><i class="fa-solid fa-delete-left"></i> Delete</button>
                         `;// it adds the delete btn
                 eventList.appendChild(eventItem);
@@ -232,6 +244,41 @@ document.addEventListener('DOMContentLoaded', function () {
             eventList.innerHTML = '<div class="no-events">No events scheduled for this day</div>';//if no event exists it shows this thing
 
         }
+
+        //complete button handeling code sdf
+        document.querySelectorAll('.complete-event-btn').forEach(btn => {
+
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const idx = parseInt(btn.getAttribute('data-index')); //parsenin converts string to integer hai 
+                const event = events[dateStr][idx];
+                const { data: { session } } = await sb.auth.getSession();
+
+                //for saving the achievement permamently 
+                await sb.from('achievements').insert({
+                    user_id: session.user.id,
+                    date_key: dateStr,
+                    time: event.time,
+                    text: event.text
+                });
+                await deleteEvent(event.id, dateStr, idx); //dletes from event panels and go to the achievement one...
+                renderCalender();
+                showEvents(dateStr);
+                updateAchievementCount();
+
+            });
+
+        });
+
+
+
+
+
+
+
+
+
+
         //add event form
         const togglebtn = document.getElementById('add-event-toggle');
         const newToggleBtn = togglebtn.cloneNode(true); // her eclone node is removing the old listeners

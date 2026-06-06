@@ -4,7 +4,6 @@ async function initAuth() {
     if (!session) {
         showAuthModal(); //if there is no session it calls showatuth model fxn and shows the login signupform 
     } else {
-        document.getElementById('auth-modal').remove();
         document.getElementById('user-email').textContent = session.user.email;
     }
 }
@@ -37,7 +36,7 @@ function showAuthModal() {
     document.getElementById('tab-login').addEventListener('click', () => {
         mode = 'login';
         document.getElementById('auth-submit').textContent = 'Login';
-        document.getElementById('tab-login').classList.add('acive');
+        document.getElementById('tab-login').classList.add('active');
         document.getElementById('tab-signup').classList.remove('active');
 
     });
