@@ -646,21 +646,23 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.5rem;
+    padding: 2px;
+    margin-bottom: 0.2rem;
     border-radius: 10px;
     background: (var(--secondary));
-    border-left: 4px solid var(--accent);
-    transition: transform 0.2s ease;
+    border: 1px solid var(--accent);
+    transition: transform 0.8s ease;
+    margin-right: 4px;
+    margin-left: 4px;
 }
 
 .event-item:hover {
-    transform: translateX(5px);
+    transform: translateX(3px);
 }
 
 .event-color {
-    width: 15px;
-    height: 15px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     background: var(--dark);
     flex-shrink: 0;
@@ -1070,30 +1072,42 @@ auth-box>button:hover {
     top: 0;
     right: 0;
     height: 100vh;
-    width: 380px;
-    background: #252220;
+    width: 400px;
+    background: #1e1c1a;
     border-left: 1px solid rgba(255, 255, 255, 0.07);
     padding: 2rem;
     z-index: 998;
     overflow-y: auto;
-    animation: slideIn 0.3 ease;
+    animation: slideIn 0.3 cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes slideIn {
     from {
         transform: translateX(100%);
+        opacity: 0;
     }
 
     to {
         transform: translateX(0);
+        opacity: 1;
     }
 }
 
-.achievement-pannel-header-h2 {
-    color: var(--accent);
+.achievement-panel-header  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.9rem;
+    padding: 15px;
+    border-bottom:1px solid rgba(255,255,255,0.07);;
     font-size: 1.2rem;
 }
-
+.achievement-panel-header h2 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
 .user-info {
     display: flex;
     align-items: center;

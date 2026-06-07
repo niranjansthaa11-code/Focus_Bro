@@ -1,4 +1,4 @@
-
+const NepaliDate = window.NepaliDate?.default || window.NepaliDate;
 // for storing of the event 
 let events = {};
 
@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         const { data, error } = await sb.from('achievements')
             .select('*')
             .eq('user_id', session.user.id)
-            .order('completed_at', { ascending: false });
+            .order('completed_at', { ascending: false })
+            .order('date_key', { ascending: false });
 
         if (error) { console.error(error); return; }
 
@@ -157,16 +158,27 @@ document.addEventListener('DOMContentLoaded', async function () {
         const month = currentDate.getMonth();
 
         const firstDay = new NepaliDate(year, month, 1);
-        const daysInMonth = firstDay.daysInMonth;
-        const firstDayIndex = firstDay.getDay();
+        const firstDayIndex = firstDay.toJsDate().getDay();
+
 
         const prevMonth = month === 0 ? 11 : month - 1;
         const prevyear = month === 0 ? year - 1 : year;
-        const PrevLastday = new NepaliDate(prevyear, prevMonth, 1).daysInMonth;
+        const prevFirstDay = new NepaliDate(prevyear, prevMonth, 1);
+        const prevFirstDayJs = prevFirstDay.toJsDate();
+        const PrevLastDayJs = new Date(firstDay.toJsDate().getTime() - 86400000);
+        const PrevLastDay = new NepaliDate(PrevLastDayJs).getDate();
+
+        const daysInMonth = (() => {
+            const nextMonth = month === 11 ? 0 : month + 1;
+            const nextYear = month === 11 ? year + 1 : year;
+            const nextFirst = new NepaliDate(nextYear, nextMonth, 1).toJsDate();
+            const lastJs = new Date(nextFirst.getTime() - 86400000);
+            return new NepaliDate(lastJs).getDate();
+        })();
 
         //for the last day
         const lastDay = new NepaliDate(year, month, daysInMonth);
-        const lastDayIndex = lastDay.getDay();
+        const lastDayIndex = lastDay.toJsDate().getDay();
         const nextDays = lastDayIndex === 6 ? 0 : 6 - lastDayIndex; //same sort of logic like i did with the english date
 
         const months = [
@@ -181,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         //for the previous month days
         for (let x = firstDayIndex; x > 0; x--) { // this loop counts from the firstdayindex to 0 index
-            const prevDate = PrevLastday - x + 1;
+            const prevDate = PrevLastDay - x + 1;
             const dateKey = `${year}-${month}-${prevDate}`;
             const hasEvent = events[dateKey] !== undefined;
 
@@ -318,6 +330,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         newToggleBtn.style.display = 'flex';
 
         //adding the event form 
+        const oldForm = eventList.querySelector('.add-event-form');
+        if (oldForm) oldForm.remove();
         const formDiv = document.createElement('div');
         formDiv.className = 'add-event-form';
         formDiv.innerHTML = `<h4>Add New TASK</h4>
@@ -456,6 +470,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
     });
+    document.getElementById('add-event-toggle').addEventListener('click', () => {
+        if (!selectedDateStr) {
+            alert('Please select the date first bro...');
+        }
+    });
+
     renderCalender();
     console.log("Current Nepali Date:", {
         year: currentDate.getYear(),
