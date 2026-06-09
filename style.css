@@ -1306,7 +1306,7 @@ cg-grid-wrap {
 }
 
 .cg-future:hover {
-        background: rgba(28, 26, 24, 0.06);
+    background: rgba(28, 26, 24, 0.06);
     cursor: default;
     transform: none;
 }
@@ -1344,4 +1344,129 @@ cg-grid-wrap {
     width: 10px;
     height: 10px;
     border-radius: 2px;
+}
+
+
+
+
+
+/* I have copied this from my previous project  */
+/* The sathi ai part  */
+.main-chat-container {
+    width: 100%;
+    height: calc(100vh - 120px);
+    display: none;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background: #252220;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+}
+
+header {
+    background: var(--dark);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+header h1 {
+    font-size: 30px;
+    color: var(--primary);
+}
+
+.newchat {
+    background: #2660b8;
+    color: #fff;
+    border: 1px solid black;
+    border-radius: 14px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.1s;
+    margin-left: auto;
+}
+
+.newchat:hover {
+    background: #1f6feb;
+}
+
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: transparent;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    line-height: 1.4;
+    box-shadow: 0 1px 3px #010409;
+}
+
+.message-user {
+    background: var(--accent);
+    color: var(--dark);
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.message-bot {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary);
+
+    align-self: flex-start;
+}
+
+.input-area {
+    display: flex;
+    padding: 10px;
+    background: var(--dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    color: #e6edf3;
+    ;
+}
+
+#user-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--primary);
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+#user-input::placeholder {
+    color: rgba(255,255,255,0.4);
+    font-weight: 800;
+    font-size: 15px;
+}
+
+#send-btn {
+    padding: 10px 15px;
+    margin-left: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    background:var(--accent);
+    outline: none;
+    color:var(--dark);
+    transition: background 0.3s;
+}
+#send-btn:hover{
+    background: var(--today);
+    outline: none;
 }

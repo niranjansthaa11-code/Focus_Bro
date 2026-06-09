@@ -66,8 +66,8 @@
                     </svg><span>Your achievement !!</span>
                 </a></li>
 
-            <li><a href="Ai help"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                        width="24px" fill="#e3e3e3">
+            <li><a href="#" id="ai-help-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                         <path
                             d="M200-120q-33 0-56.5-23.5T120-200v-400q0-100 70-170t170-70h240q100 0 170 70t70 170v400q0 33-23.5 56.5T760-120H200Zm0-80h560v-400q0-66-47-113t-113-47H360q-66 0-113 47t-47 113v400Zm103.5-303.5Q280-527 280-560t23.5-56.5Q327-640 360-640t56.5 23.5Q440-593 440-560t-23.5 56.5Q393-480 360-480t-56.5-23.5Zm240 0Q520-527 520-560t23.5-56.5Q567-640 600-640t56.5 23.5Q680-593 680-560t-23.5 56.5Q633-480 600-480t-56.5-23.5ZM280-200v-80q0-33 23.5-56.5T360-360h240q33 0 56.5 23.5T680-280v80h-80v-80h-80v80h-80v-80h-80v80h-80Zm-80 0h560-560Z" />
                     </svg><span>Ai_help</span></a></li>
@@ -90,160 +90,177 @@
     </nav>
 
     <main class="main">
-        <!-- For the good morning greeting  -->
-        <div class="greeting-bar">
-            <div class="achievement-badge">
-                <i class="fa-solid fa-trophy"></i>
-                <span id="achievement-count">0</span> tasks done lifetime 
-            </div>
-            <div class="greeting-text">
-                <span class="greeting-label" id="greeting-label">Good Morning ,</span>
-                <span class="greeting-name">Sathi 👋</span>
-            </div>
-            <div class="greeting-meta">
-                <span class="greeting-date" id="greeting-date"></span>
-                <span class="greeting-time" id="greeting-time"></span>
-            </div>
-        </div>
-
-        <div class="main-container">
-            <div class="calender-container">
-                <div class="calender-header">
-                    <div class="calender-nav-buttons">
-                        <button class="calnav-btn" id="Prev-month"> <i class="fa-solid fa-left-long"></i></button>
-                        <button class="calnav-btn" id="next-month"> <i class="fa-solid fa-right-long"></i></button>
-                    </div>
-                    <div class="moth-year" id="month-year"> April 2026 </div>
+        <div class="dashboard-content" id="dashboard-content">
+            <!-- For the good morning greeting  -->
+            <div class="greeting-bar">
+                <div class="achievement-badge">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span id="achievement-count">0</span> tasks done lifetime
                 </div>
-                <div class="week-days">
-                    <div class="weekday">Sun</div>
-                    <div class="weekday">Mon</div>
-                    <div class="weekday">Tue</div>
-                    <div class="weekday">Wed</div>
-                    <div class="weekday">Thu</div>
-                    <div class="weekday">Fri</div>
-                    <div class="weekday">Sat</div>
+                <div class="greeting-text">
+                    <span class="greeting-label" id="greeting-label">Good Morning ,</span>
+                    <span class="greeting-name">Sathi 👋</span>
                 </div>
-                <div class="days" id="days"></div>
-                <div class="calender-footer">
-                    <button class="today-btn" id="today-btn"> Today</button>
-                    <div class="event-indicator">
-                        <span class="dot-indicator"></span>
-                        <span>Has events comming</span>
-                    </div>
+                <div class="greeting-meta">
+                    <span class="greeting-date" id="greeting-date"></span>
+                    <span class="greeting-time" id="greeting-time"></span>
                 </div>
             </div>
 
-            <!-- event dekhaunih thau -->
-            <div class="event-panel" id="event-panel">
-                <div class="event-header">
-                    <div class="event-date" id="event-date">Select a date</div>
-                    <div style="display:flex;align-items:center;gap:8px;">
-                        <i class="fas fa-calendar-alt event-icon"></i>
-                        <button class="add-event-toggle-btn" id="add-event-toggle" title="Add event">
-                            <i class="fa-solid fa-circle-plus"></i>
-                        </button>
+            <div class="main-container">
+                <div class="calender-container">
+                    <div class="calender-header">
+                        <div class="calender-nav-buttons">
+                            <button class="calnav-btn" id="Prev-month"> <i class="fa-solid fa-left-long"></i></button>
+                            <button class="calnav-btn" id="next-month"> <i class="fa-solid fa-right-long"></i></button>
+                        </div>
+                        <div class="moth-year" id="month-year"> April 2026 </div>
+                    </div>
+                    <div class="week-days">
+                        <div class="weekday">Sun</div>
+                        <div class="weekday">Mon</div>
+                        <div class="weekday">Tue</div>
+                        <div class="weekday">Wed</div>
+                        <div class="weekday">Thu</div>
+                        <div class="weekday">Fri</div>
+                        <div class="weekday">Sat</div>
+                    </div>
+                    <div class="days" id="days"></div>
+                    <div class="calender-footer">
+                        <button class="today-btn" id="today-btn"> Today</button>
+                        <div class="event-indicator">
+                            <span class="dot-indicator"></span>
+                            <span>Has events comming</span>
+                        </div>
                     </div>
                 </div>
-                <div class="event-list" id="event-list">
-                    <div class="no-events"> Please select a date to view them here</div>
-                </div>
-            </div>
 
-
-            <!-- Creating a pomodoro timer -->
-            <div class="pomodoro-container">
-                <h1 class="pompdoro-title">Pomodoro Timer </h1>
-                <hr>
-                <p class="timer" id="timer">25:00</p>
-                <div class="pomo-btn-wrapper1">
-                    <button id="start">Start</button>
-                    <button id="stop">Stop</button>
-                    <button id="reset">Reset</button>
-
-                </div>
-            </div>
-        </div>
-        <div class="achievement-panel" id="achievement-panel" style="display:none;">
-            <div class="achievement-panel-header">
-                <h2>🏆 Your Achievements</h2>
-                <button id="close-achievement" class="focus-close">✕ Close</button>
-            </div>
-            <div id="achievement-count-display"
-                style="margin-bottom:1rem; font-size:1rem; color:var(--accent); font-weight:700;"></div>
-            <div id="achievement-list"></div>
-        </div>
-
-        <!-- for the contrib-grid -->
-        <div class="contrib-container">
-            <div class="contrib-header">
-                <span class="contrib-title">Focus Activity Tracker</span>
-                <span class="contrib-subtitle" id="cg-total-label"> 0 tasks Completed </span>
-            </div>
-            <!-- this will create the summary of the persons act  -->
-            <div class="contrib-stats">
-                <div class="contrib-stat">
-                    <div class="contrib-stat-label"> This Week</div>
-                    <div class="contrib-stat-val" id="cg-week">-</div>
-                </div>
-                <div class="contrib-stat">
-                    <div class="contrib-stat-label">Best day</div>
-                    <div class="contrib-stat-val" id="cg-best">—</div>
-                </div>
-                <div class="contrib-stat">
-                    <div class="contrib-stat-label">Streak</div>
-                    <div class="contrib-stat-val" id="cg-streak">—</div>
-                </div>
-                <div class="contrib-stat">
-                    <div class="contrib-stat-label">Total</div>
-                    <div class="contrib-stat-val" id="cg-total">—</div>
-                </div>
-            </div>
-
-            <!-- The real labeling thing  -->
-            <div class="cg-grid-wrap">
-                <div class="cg-month-row" id="cg-month-labels"></div>
-                <!-- here month label lai leunih ho  -->
-                <div class="cg-grid-body">
-                    <div class="cg-day-labels">
-                        <div class="cg-day-label"></div>
-                        <div class="cg-day-label">Mon</div>
-                        <div class="cg-day-label"></div>
-                        <div class="cg-day-label">Wed</div>
-                        <div class="cg-day-label"></div>
-                        <div class="cg-day-label">Fri</div>
-                        <div class="cg-day-label"></div>
+                <!-- event dekhaunih thau -->
+                <div class="event-panel" id="event-panel">
+                    <div class="event-header">
+                        <div class="event-date" id="event-date">Select a date</div>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <i class="fas fa-calendar-alt event-icon"></i>
+                            <button class="add-event-toggle-btn" id="add-event-toggle" title="Add event">
+                                <i class="fa-solid fa-circle-plus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div id="cg-weeks"></div>
-                    <!-- paxi yei cg weeks lai hamley fill up garauneu xauuu -->
+                    <div class="event-list" id="event-list">
+                        <div class="no-events"> Please select a date to view them here</div>
+                    </div>
+                </div>
+
+
+                <!-- Creating a pomodoro timer -->
+                <div class="pomodoro-container">
+                    <h1 class="pompdoro-title">Pomodoro Timer </h1>
+                    <hr>
+                    <p class="timer" id="timer">25:00</p>
+                    <div class="pomo-btn-wrapper1">
+                        <button id="start">Start</button>
+                        <button id="stop">Stop</button>
+                        <button id="reset">Reset</button>
+
+                    </div>
                 </div>
             </div>
-
-            <!-- These are for the colour intensity  -->
-            <div class="cg-change">
-                <span class="cg-change-label">Less</span>
-                <div class="cg-change-boxes">
-                    <div class="cg-change-box" style="background:#EDE8E0"></div>
-                    <div class="cg-change-box" style="background:#D4B896"></div>
-                    <div class="cg-change-box" style="background:#C9A87C"></div>
-                    <div class="cg-change-box" style="background:#B89F7A"></div>
-                    <div class="cg-change-box" style="background:#8B6914"></div>
+            <div class="achievement-panel" id="achievement-panel" style="display:none;">
+                <div class="achievement-panel-header">
+                    <h2>🏆 Your Achievements</h2>
+                    <button id="close-achievement" class="focus-close">✕ Close</button>
                 </div>
-                <span class="cg-change-label">More</span>
+                <div id="achievement-count-display"
+                    style="margin-bottom:1rem; font-size:1rem; color:var(--accent); font-weight:700;"></div>
+                <div id="achievement-list"></div>
             </div>
 
+            <!-- for the contrib-grid -->
+            <div class="contrib-container">
+                <div class="contrib-header">
+                    <span class="contrib-title">Focus Activity Tracker</span>
+                    <span class="contrib-subtitle" id="cg-total-label"> 0 tasks Completed </span>
+                </div>
+                <!-- this will create the summary of the persons act  -->
+                <div class="contrib-stats">
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label"> This Week</div>
+                        <div class="contrib-stat-val" id="cg-week">-</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Best day</div>
+                        <div class="contrib-stat-val" id="cg-best">—</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Streak</div>
+                        <div class="contrib-stat-val" id="cg-streak">—</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Total</div>
+                        <div class="contrib-stat-val" id="cg-total">—</div>
+                    </div>
+                </div>
+
+                <!-- The real labeling thing  -->
+                <div class="cg-grid-wrap">
+                    <div class="cg-month-row" id="cg-month-labels"></div>
+                    <!-- here month label lai leunih ho  -->
+                    <div class="cg-grid-body">
+                        <div class="cg-day-labels">
+                            <div class="cg-day-label"></div>
+                            <div class="cg-day-label">Mon</div>
+                            <div class="cg-day-label"></div>
+                            <div class="cg-day-label">Wed</div>
+                            <div class="cg-day-label"></div>
+                            <div class="cg-day-label">Fri</div>
+                            <div class="cg-day-label"></div>
+                        </div>
+                        <div id="cg-weeks"></div>
+                        <!-- paxi yei cg weeks lai hamley fill up garauneu xauuu -->
+                    </div>
+                </div>
+
+                <!-- These are for the colour intensity  -->
+                <div class="cg-change">
+                    <span class="cg-change-label">Less</span>
+                    <div class="cg-change-boxes">
+                        <div class="cg-change-box" style="background:#EDE8E0"></div>
+                        <div class="cg-change-box" style="background:#D4B896"></div>
+                        <div class="cg-change-box" style="background:#C9A87C"></div>
+                        <div class="cg-change-box" style="background:#B89F7A"></div>
+                        <div class="cg-change-box" style="background:#8B6914"></div>
+                    </div>
+                    <span class="cg-change-label">More</span>
+                </div>
 
 
 
 
 
+
+
+            </div>
+        </div>
+
+        </div>
 
         </div>
         </div>
 
+        <div class="main-chat-container">
+            <header>
+                <h1>Sathi AI </h1>
+                <button class="newchat">+ New Chat </button>
+            </header>
+            <div class="chat-box" id="chat-box">
+            </div>
+            <!-- for taking input from the user  -->
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Ask anything about this website or any thought ">
+                <button id="send-btn"> Send</button>
+            </div>
         </div>
 
-        </div>
     </main>
     <script src="supabase.js"></script>
 
@@ -253,6 +270,7 @@
     <script src="contribution.js"></script>
     <script src="app.js" defer></script>
     <script src="nav.js" defer> </script>
+    <script src="chat.js"></script>
     <!-- defer waits till the full html is not opened  -->
 
 
