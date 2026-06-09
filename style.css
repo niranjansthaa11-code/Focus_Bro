@@ -1470,3 +1470,20 @@ header h1 {
     background: var(--today);
     outline: none;
 }
+
+/* for the note feature  */
+.notes-app{
+    width: 100%;
+    margin-top: 20px;
+}
+.notes-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.notes-header h2{
+    
+}
