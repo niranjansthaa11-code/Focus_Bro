@@ -36,7 +36,7 @@ body {
     padding: 0 4px 20px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.07);
     width: 100%;
-    margin-bottom:30px ;
+    margin-bottom: 30px;
 }
 
 .greeting-text {
@@ -113,7 +113,7 @@ body {
     align-self: start;
     transition: width 0.4s ease;
     overflow: hidden;
-    text-wrap: nowrap;
+    text-wrap: wrap;
     /* top is refrence for the sticky thing  */
 }
 
@@ -1094,20 +1094,23 @@ auth-box>button:hover {
     }
 }
 
-.achievement-panel-header  {
+.achievement-panel-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.9rem;
     padding: 15px;
-    border-bottom:1px solid rgba(255,255,255,0.07);;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    ;
     font-size: 1.2rem;
 }
+
 .achievement-panel-header h2 {
     color: var(--primary);
     font-size: 1.3rem;
     font-weight: 800;
 }
+
 .user-info {
     display: flex;
     align-items: center;
@@ -1130,6 +1133,215 @@ auth-box>button:hover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#opp{
+
+#opp {
     margin-top: auto;
+}
+
+/* //contribution depict start  */
+
+.contrib-container {
+    background: white;
+    border: 1px solid rgba(28, 26, 24, 0.12);
+    border-radius: 20px;
+    padding: 1rem 1.25rem;
+    width: 100%;
+    height: auto;
+    flex: 2;
+    max-width: 500px;
+    margin-top: 14px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contrib-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.contrib-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 0.75rem;
+    border-bottom: 0.5px solid rgba(28, 26, 24, 0.15);
+    margin-bottom: 1rem;
+}
+
+.contrib-title {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--dark);
+}
+
+.contrib-subtitle {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.6;
+}
+
+.contrib-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin-bottom: 1rem;
+
+}
+
+.contrib-stat {
+    background: var(--secondary);
+    border-radius: 10px;
+    padding: 0.6rem;
+    text-align: center;
+}
+
+.contrib-stat-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.contrib-stat-val {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.2;
+}
+
+.cg-month-row {
+    position: relative;
+    height: 16px;
+    margin-left: 28px;
+    margin-bottom: 3px;
+}
+
+.cg-month {
+    position: absolute;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0.55;
+    white-space: nowrap;
+}
+
+.cg-grid-body {
+    display: flex;
+    gap: 3px;
+}
+
+.cg-day-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.cg-day-label {
+    height: 12px;
+    width: 24px;
+    width: 24px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.5;
+    text-align: right;
+    padding-right: 4px;
+    line-height: 12px;
+}
+
+cg-grid-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.cg-grid-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+/* this hides the scrollbar  */
+#cg-weeks {
+    display: flex;
+    gap: 2px;
+}
+
+.cg-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+}
+
+.cg-box:hover {
+    transform: scale(1.4);
+}
+
+.cg-0 {
+    background: #EDE8E0;
+}
+
+.cg-1 {
+    background: #D4B896;
+}
+
+.cg-2 {
+    background: #C9A87C;
+}
+
+.cg-3 {
+    background: #B89F7A;
+}
+
+.cg-4 {
+    background: #8B6914;
+}
+
+.cg-future {
+    background: transparent;
+    cursor: default;
+}
+
+.cg-future:hover {
+        background: rgba(28, 26, 24, 0.06);
+    cursor: default;
+    transform: none;
+}
+
+.cg-today {
+    outline: 0.5px solid var(--dark);
+    outline-offset: 1px;
+}
+
+.cg-box {
+    display: flex;
+}
+
+.cg-change {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.cg-change-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.6;
+}
+
+.cg-change-boxes {
+    display: flex;
+    gap: 3px;
+}
+
+.cg-change-box {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
 }

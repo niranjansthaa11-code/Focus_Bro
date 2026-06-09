@@ -94,7 +94,7 @@
         <div class="greeting-bar">
             <div class="achievement-badge">
                 <i class="fa-solid fa-trophy"></i>
-                <span id="achievement-count">0</span> tasks done
+                <span id="achievement-count">0</span> tasks done lifetime 
             </div>
             <div class="greeting-text">
                 <span class="greeting-label" id="greeting-label">Good Morning ,</span>
@@ -172,71 +172,73 @@
             <div id="achievement-count-display"
                 style="margin-bottom:1rem; font-size:1rem; color:var(--accent); font-weight:700;"></div>
             <div id="achievement-list"></div>
+        </div>
 
-            <!-- for the contrib-grid -->
-            <div class="contrib-container">
-                <div class="contrib-header">
-                    <span class="contrib-title">Focus Activity Tracker</span>
-                    <span class="contrib-subtitle" id="cg-total-label"> 0 tasks Completed </span>
-                </div>
-                <!-- this will create the summary of the persons act  -->
-                <div class="contrib-stats">
-                    <div class="contrib-stat">
-                        <div class="contrib-stat-label"> This Week</div>
-                        <div class="contrib-stat-val" id="cg-week">-</div>
-                    </div>
-                    <div class="contrib-stat">
-                        <div class="contrib-stat-label">Best day</div>
-                        <div class="contrib-stat-val" id="cg-best">—</div>
-                    </div>
-                    <div class="contrib-stat">
-                        <div class="contrib-stat-label">Streak</div>
-                        <div class="contrib-stat-val" id="cg-streak">—</div>
-                    </div>
-                    <div class="contrib-stat">
-                        <div class="contrib-stat-label">Total</div>
-                        <div class="contrib-stat-val" id="cg-total">—</div>
-                    </div>
-
-                    <!-- The real labeling thing  -->
-                    <div class="cg-grid-wrap">
-                        <div class="cg-month-row" id="cg-month-labels"></div> 
-                        <!-- here month label lai leunih ho  -->
-                        <div class="cg-grid-body">
-                            <div class="cg-day-labels">
-                                <div class="cg-day-label"></div>
-                                <div class="cg-day-label">Mon</div>
-                                <div class="cg-day-label"></div>
-                                <div class="cg-day-label">Wed</div>
-                                <div class="cg-day-label"></div>
-                                <div class="cg-day-label">Fri</div>
-                                <div class="cg-day-label"></div>
-                            </div>
-                            <div id="cg-weeks"></div>
-                            <!-- paxi yei cg weeks lai hamley fill up garauneu xauuu -->
-                        </div>
-                    </div>
-
-                    <!-- These are for the colour intensity  -->
-                    <div class="cg-change">
-                        <span class="cg-change-label">Less</span>
-                        <div class="cg-change-boxes">
-                            <div class="cg-change-box" style="background:#EDE8E0"></div>
-                            <div class="cg-change-box" style="background:#D4B896"></div>
-                            <div class="cg-change-box" style="background:#C9A87C"></div>
-                            <div class="cg-change-box" style="background:#B89F7A"></div>
-                            <div class="cg-change-box" style="background:#8B6914"></div>
-                        </div>
-                        <span class="cg-change-label">More</span>
-                    </div>
-                </div>
-
-
-
-
-
-
+        <!-- for the contrib-grid -->
+        <div class="contrib-container">
+            <div class="contrib-header">
+                <span class="contrib-title">Focus Activity Tracker</span>
+                <span class="contrib-subtitle" id="cg-total-label"> 0 tasks Completed </span>
             </div>
+            <!-- this will create the summary of the persons act  -->
+            <div class="contrib-stats">
+                <div class="contrib-stat">
+                    <div class="contrib-stat-label"> This Week</div>
+                    <div class="contrib-stat-val" id="cg-week">-</div>
+                </div>
+                <div class="contrib-stat">
+                    <div class="contrib-stat-label">Best day</div>
+                    <div class="contrib-stat-val" id="cg-best">—</div>
+                </div>
+                <div class="contrib-stat">
+                    <div class="contrib-stat-label">Streak</div>
+                    <div class="contrib-stat-val" id="cg-streak">—</div>
+                </div>
+                <div class="contrib-stat">
+                    <div class="contrib-stat-label">Total</div>
+                    <div class="contrib-stat-val" id="cg-total">—</div>
+                </div>
+            </div>
+
+            <!-- The real labeling thing  -->
+            <div class="cg-grid-wrap">
+                <div class="cg-month-row" id="cg-month-labels"></div>
+                <!-- here month label lai leunih ho  -->
+                <div class="cg-grid-body">
+                    <div class="cg-day-labels">
+                        <div class="cg-day-label"></div>
+                        <div class="cg-day-label">Mon</div>
+                        <div class="cg-day-label"></div>
+                        <div class="cg-day-label">Wed</div>
+                        <div class="cg-day-label"></div>
+                        <div class="cg-day-label">Fri</div>
+                        <div class="cg-day-label"></div>
+                    </div>
+                    <div id="cg-weeks"></div>
+                    <!-- paxi yei cg weeks lai hamley fill up garauneu xauuu -->
+                </div>
+            </div>
+
+            <!-- These are for the colour intensity  -->
+            <div class="cg-change">
+                <span class="cg-change-label">Less</span>
+                <div class="cg-change-boxes">
+                    <div class="cg-change-box" style="background:#EDE8E0"></div>
+                    <div class="cg-change-box" style="background:#D4B896"></div>
+                    <div class="cg-change-box" style="background:#C9A87C"></div>
+                    <div class="cg-change-box" style="background:#B89F7A"></div>
+                    <div class="cg-change-box" style="background:#8B6914"></div>
+                </div>
+                <span class="cg-change-label">More</span>
+            </div>
+
+
+
+
+
+
+
+        </div>
         </div>
 
         </div>
@@ -244,10 +246,11 @@
         </div>
     </main>
     <script src="supabase.js"></script>
-    <script src="contribution.js"></script>
+
     <script src="auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
     <!-- //cdn link of the nepali converter -->
+    <script src="contribution.js"></script>
     <script src="app.js" defer></script>
     <script src="nav.js" defer> </script>
     <!-- defer waits till the full html is not opened  -->

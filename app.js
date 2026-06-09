@@ -93,7 +93,7 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 document.addEventListener('DOMContentLoaded', async function () {
     await loadEvents(); // calling the load event function 
     updateAchievementCount();
-    updateAchievementCount();
+    renderContributionGrid();
 
     const monthyear = document.getElementById('month-year');
     const daysel = document.getElementById('days');
@@ -308,6 +308,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const event = events[dateStr][idx];
                 const { data: { session } } = await sb.auth.getSession();
 
+
+                if (!confirm('Be honest  have you really completed this task?')) {
+                    return; // User cancelled do nothing
+                }
+
                 //for saving the achievement permamently 
                 await sb.from('achievements').insert({
                     user_id: session.user.id,
@@ -421,6 +426,28 @@ document.addEventListener('DOMContentLoaded', async function () {
                 errorDiv.style.display = 'block';
                 return;
             }
+
+
+
+            //checking if the selected date is past for preventing the past add up thing 
+            const today = new NepaliDate();
+            const [selYear, selMonth, selDay] = selectedDateStr.split('-').map(Number);
+            const selected = new NepaliDate(selYear, selMonth - 1, selDay);
+
+            const todayYear = today.getYear();
+            const todayMonth = today.getMonth();
+            const todayDay = today.getDate();
+
+            if (
+                selYear < todayYear ||
+                (selYear === todayYear && selMonth - 1 < todayMonth) ||
+                (selYear === todayYear && selMonth - 1 === todayMonth && selDay < todayDay)
+            ) {
+                errorDiv.textContent = 'You cannot add tasks to a past date.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
             await saveEvents(selectedDateStr, time, text);
             renderCalender();
             showEvents(selectedDateStr);
