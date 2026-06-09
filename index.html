@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sathi_Focus</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contribution.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -52,14 +54,10 @@
             </li>
             <!-- sub menu end -->
 
-            <li><a href="Contact"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                        width="24px" fill="#e3e3e3">
-                        <path
-                            d="m480-80-10-120h-10q-142 0-241-99t-99-241q0-142 99-241t241-99q71 0 132.5 26.5t108 73q46.5 46.5 73 108T800-540q0 75-24.5 144t-67 128q-42.5 59-101 107T480-80Zm80-146q71-60 115.5-140.5T720-540q0-109-75.5-184.5T460-800q-109 0-184.5 75.5T200-540q0 109 75.5 184.5T460-280h100v54Zm-72-107q12-12 12-29t-12-29q-12-12-29-12t-29 12q-12 12-12 29t12 29q12 12 29 12t29-12Zm-58-115h60q0-30 6-42t38-44q18-18 30-39t12-45q0-51-34.5-76.5T460-720q-44 0-74 24.5T344-636l56 22q5-17 19-33.5t41-16.5q27 0 40.5 15t13.5 33q0 17-10 30.5T480-558q-35 30-42.5 47.5T430-448Zm30-65Z" />
-                    </svg> <span>Contact Us</span></a></li>
 
-            <li><a href="#" id="achievement-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                        width="24px" fill="#e3e3e3">
+
+            <li><a href="#" id="achievement-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
                         <path
                             d="m80-80 200-560 360 360L80-80Zm132-132 282-100-182-182-100 282Zm370-246-42-42 224-224q32-32 77-32t77 32l24 24-42 42-24-24q-14-14-35-14t-35 14L582-458ZM422-618l-42-42 24-24q14-14 14-34t-14-34l-26-26 42-42 26 26q32 32 32 76t-32 76l-24 24Zm80 80-42-42 144-144q14-14 14-35t-14-35l-64-64 42-42 64 64q32 32 32 77t-32 77L502-538Zm160 160-42-42 64-64q32-32 77-32t77 32l64 64-42 42-64-64q-14-14-35-14t-35 14l-64 64ZM212-212Z" />
                     </svg>
@@ -73,7 +71,9 @@
                         <path
                             d="M200-120q-33 0-56.5-23.5T120-200v-400q0-100 70-170t170-70h240q100 0 170 70t70 170v400q0 33-23.5 56.5T760-120H200Zm0-80h560v-400q0-66-47-113t-113-47H360q-66 0-113 47t-47 113v400Zm103.5-303.5Q280-527 280-560t23.5-56.5Q327-640 360-640t56.5 23.5Q440-593 440-560t-23.5 56.5Q393-480 360-480t-56.5-23.5Zm240 0Q520-527 520-560t23.5-56.5Q567-640 600-640t56.5 23.5Q680-593 680-560t-23.5 56.5Q633-480 600-480t-56.5-23.5ZM280-200v-80q0-33 23.5-56.5T360-360h240q33 0 56.5 23.5T680-280v80h-80v-80h-80v80h-80v-80h-80v80h-80Zm-80 0h560-560Z" />
                     </svg><span>Ai_help</span></a></li>
-            <li id="opp"  style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.07); padding-top:0.5rem;">
+            <li><a href="https://github.com/niranjansthaa11-code/Focus_Bro"><i class="fa-brands fa-github"></i>
+                    <span>Github Repo</span></a></li>
+            <li id="opp" style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.07); padding-top:0.5rem;">
                 <div class="user-info">
                     <i class="fa-solid fa-circle-user"></i>
                     <span id="user-email">....</span>
@@ -165,16 +165,86 @@
             </div>
         </div>
         <div class="achievement-panel" id="achievement-panel" style="display:none;">
-    <div class="achievement-panel-header">
-        <h2>🏆 Your Achievements</h2>
-        <button id="close-achievement" class="focus-close">✕ Close</button>
-    </div>
-    <div id="achievement-count-display" style="margin-bottom:1rem; font-size:1rem; color:var(--accent); font-weight:700;"></div>
-    <div id="achievement-list"></div>
+            <div class="achievement-panel-header">
+                <h2>🏆 Your Achievements</h2>
+                <button id="close-achievement" class="focus-close">✕ Close</button>
+            </div>
+            <div id="achievement-count-display"
+                style="margin-bottom:1rem; font-size:1rem; color:var(--accent); font-weight:700;"></div>
+            <div id="achievement-list"></div>
 
-</div>
+            <!-- for the contrib-grid -->
+            <div class="contrib-container">
+                <div class="contrib-header">
+                    <span class="contrib-title">Focus Activity Tracker</span>
+                    <span class="contrib-subtitle" id="cg-total-label"> 0 tasks Completed </span>
+                </div>
+                <!-- this will create the summary of the persons act  -->
+                <div class="contrib-stats">
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label"> This Week</div>
+                        <div class="contrib-stat-val" id="cg-week">-</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Best day</div>
+                        <div class="contrib-stat-val" id="cg-best">—</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Streak</div>
+                        <div class="contrib-stat-val" id="cg-streak">—</div>
+                    </div>
+                    <div class="contrib-stat">
+                        <div class="contrib-stat-label">Total</div>
+                        <div class="contrib-stat-val" id="cg-total">—</div>
+                    </div>
+
+                    <!-- The real labeling thing  -->
+                    <div class="cg-grid-wrap">
+                        <div class="cg-month-row" id="cg-month-labels"></div> 
+                        <!-- here month label lai leunih ho  -->
+                        <div class="cg-grid-body">
+                            <div class="cg-day-labels">
+                                <div class="cg-day-label"></div>
+                                <div class="cg-day-label">Mon</div>
+                                <div class="cg-day-label"></div>
+                                <div class="cg-day-label">Wed</div>
+                                <div class="cg-day-label"></div>
+                                <div class="cg-day-label">Fri</div>
+                                <div class="cg-day-label"></div>
+                            </div>
+                            <div id="cg-weeks"></div>
+                            <!-- paxi yei cg weeks lai hamley fill up garauneu xauuu -->
+                        </div>
+                    </div>
+
+                    <!-- These are for the colour intensity  -->
+                    <div class="cg-change">
+                        <span class="cg-change-label">Less</span>
+                        <div class="cg-change-boxes">
+                            <div class="cg-change-box" style="background:#EDE8E0"></div>
+                            <div class="cg-change-box" style="background:#D4B896"></div>
+                            <div class="cg-change-box" style="background:#C9A87C"></div>
+                            <div class="cg-change-box" style="background:#B89F7A"></div>
+                            <div class="cg-change-box" style="background:#8B6914"></div>
+                        </div>
+                        <span class="cg-change-label">More</span>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+
+        </div>
+
+        </div>
     </main>
     <script src="supabase.js"></script>
+    <script src="contribution.js"></script>
     <script src="auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter/dist/nepali-date-converter.umd.js"></script>
     <!-- //cdn link of the nepali converter -->

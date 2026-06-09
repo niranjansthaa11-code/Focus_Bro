@@ -93,6 +93,7 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 document.addEventListener('DOMContentLoaded', async function () {
     await loadEvents(); // calling the load event function 
     updateAchievementCount();
+    updateAchievementCount();
 
     const monthyear = document.getElementById('month-year');
     const daysel = document.getElementById('days');
@@ -318,6 +319,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 renderCalender();
                 showEvents(dateStr);
                 updateAchievementCount();
+                renderContributionGrid(); //for updating the task live as the user completes it it updates very quickly 
 
             });
 
