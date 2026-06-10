@@ -1376,7 +1376,7 @@ header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    
+
 }
 
 header h1 {
@@ -1451,7 +1451,7 @@ header h1 {
 }
 
 #user-input::placeholder {
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
     font-weight: 800;
     font-size: 15px;
 }
@@ -1461,22 +1461,25 @@ header h1 {
     margin-left: 5px;
     border-radius: 25px;
     cursor: pointer;
-    background:var(--accent);
+    background: var(--accent);
     outline: none;
-    color:var(--dark);
+    color: var(--dark);
     transition: background 0.3s;
 }
-#send-btn:hover{
+
+#send-btn:hover {
     background: var(--today);
     outline: none;
 }
 
 /* for the note feature  */
-.notes-app{
+.notes-app {
     width: 100%;
     margin-top: 20px;
+    display: none;
 }
-.notes-header{
+
+.notes-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1484,35 +1487,40 @@ header h1 {
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.notes-header h2{
+
+.notes-header h2 {
     color: var(--primary);
     font-size: 1.6rem;
     font-weight: 600;
 }
+
 .add-new-note {
     background: var(--accent);
     padding: 8px 18px;
     border: none;
     border-radius: 40px;
-    font-weight:600;
+    font-weight: 600;
     color: var(--dark);
     cursor: pointer;
     transition: all 0.2s ease;
 }
-.add-new-note:hover{
+
+.add-new-note:hover {
     background-color: var(--today);
     transform: scale(0.96);
 }
-.notes-wrapper{
+
+.notes-wrapper {
     display: grid;
     /* as there will be many notes that we willbe presenting in the grid format  */
-    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 25px;
 }
+
 /* notebaksa that will be displayed though java hai */
-.note-baksa{
+.note-baksa {
     background: #252220;
-    border-radius:16px ;
+    border-radius: 16px;
     padding: 18px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -1520,15 +1528,45 @@ header h1 {
     flex-direction: column;
     justify-content: space-between;
 }
-.note-baksa:hover{
+
+.note-baksa:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 20px white;
 }
-.note-baksa .details{
+
+.note-baksa .details {
     flex: 1;
     overflow-y: auto;
     max-height: 160px;
     margin-bottom: 12px;
+}
+
+.notes-app .popup {
+    display: none;
+    background: #252220;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 560px;
+    animation: formslidegrney 0.25s ease;
+}
+
+.notes-app .popup.form-visible {
+    display: block;
+}
+
+@keyframes formslidegrney {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -1539,7 +1577,7 @@ header h1 {
 
 
 /* for the popup filling  */
-.popup-box{
+.popup-box {
     position: fixed;
     top: 0;
     left: 0;
@@ -1555,10 +1593,12 @@ header h1 {
     transition: opacity 0.25s ease;
     z-index: 1000;
 }
-.popup-box.show{
+
+.popup-box.show {
     opacity: 1;
-    pointer-events:auto;
+    pointer-events: auto;
 }
+
 .popup-box .popup {
     background: #252220;
     border-radius: 24px;
@@ -1567,36 +1607,157 @@ header h1 {
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
 }
-.popup .content header {
+
+.notes-app .popup .content header {
     display: flex;
-    justify-content: space-between;
-    padding: 18px 22px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
 }
-.popup .content header p {
-    font-size: 1.3rem;
+
+.notes-app .popup .content header p {
+    font-size: 1rem;
     font-weight: 700;
     color: var(--primary);
 }
-.popup .content header i {
-    font-size: 1.2rem;
+
+.notes-app .popup .content header i {
+    font-size: 1.1rem;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.5);
+    transition: color 0.2s;
 }
-.popup .content form {
-    padding: 20px 22px 30px;
-}
-.popup .row {
-    margin-bottom: 20px;
-}
-.popup .row label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
+
+.notes-app .popup .content header i:hover {
     color: var(--accent);
 }
-.popup input, .popup textarea {
+
+/* css for the form that is gonna be going to displayed  */
+
+.notes-app .popup .content form {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.notes-app .row-title,
+.notes-app .row-description {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.notes-app .row-title label,
+.notes-app .row-description label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.notes-app #note-title {
+    height: 42px;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+.notes-app #note-desc {
+    height: 100px;
+    resize: vertical;
+}
+
+.notes-app #save-note {
+    align-self: flex-end;
+    width: auto;
+    padding: 9px 28px;
+    border-radius: 40px;
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.notes-app #save-note:hover {
+    background: var(--today);
+}
+
+/* for the seprate card text  */
+
+.note-title-text {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.note-desc-text {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.55;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.note-date {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.note-edit-btn,
+.note-del-btn {
+    background: none;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.note-edit-btn {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--primary);
+}
+
+.note-del-btn {
+    border: 1px solid rgba(255,80,80,0.3);
+    color: #ff6b6b;
+}
+.note-del-btn:hover {
+    background: rgba(255,80,80,0.1);
+}
+.no-notes-msg {
+    color: rgba(255,255,255,0.25);
+    font-style: italic;
+    font-size: 0.9rem;
+    grid-column: 1/-1; 
+    /* grid will strech across all the coloumns alright  */
+}
+
+
+.popup input,
+.popup textarea {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1606,10 +1767,12 @@ header h1 {
     font-family: inherit;
     font-size: 0.9rem;
 }
+
 .popup textarea {
     height: 120px;
     resize: vertical;
 }
+
 .popup button {
     background: var(--accent);
     width: 100%;
@@ -1621,6 +1784,12 @@ header h1 {
     cursor: pointer;
     transition: 0.2s;
 }
+
 .popup button:hover {
     background: var(--today);
+}
+
+#notes-fillup {
+    display: none !important;
+    /* important makes this css rule super important than rest of it  */
 }
