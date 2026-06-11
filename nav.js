@@ -183,15 +183,15 @@ function launchFocusMode(totalSeconds, label) {
 }
 //active highlight grney 
 document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
 
         const focusOverlay = document.getElementById('focus-overlay');
         const isPomoLink = link.closest('li')?.classList.contains('dropdown');
 
-        if(focusOverlay && !PomoLink){
+        if (focusOverlay && !isPomoLink) {
             //gives the user the confirm message
             const confirmLeave = confirm('Pomodoro is running ! Are you sure you wanna exist bro ??');
-            if(confirmLeave){
+            if (confirmLeave) {
                 //removing the focus overlay 
                 focusOverlay.remove();
 
@@ -202,7 +202,7 @@ document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forE
                 if (chatContainer) chatContainer.style.display = 'none';
                 if (notesApp) notesApp.style.display = 'none';
 
-            } else{
+            } else {
                 e.preventDefault();
                 e.stopPropagation();
                 return;
@@ -217,10 +217,66 @@ document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forE
     });
 });
 
-//for hiding the all expcept notes 
-document.getElementById('ai-help-link').addEventListener('click', (e) => {
-    e.preventDefault();
+//making the centeral nav view swithcing kind of thing 
+function switchView(viewName) {
+    const focusOverlay = document.getElementById('focus-overlay');
+
+    if (focusOverlay) {
+        //alert for the user
+        const confirmLeave = confirm('Pomodoro is still runnning Do you really wanna leave ??');
+        if (confirmLeave) {
+            focusOverlay.remove();
+        } else {
+            return false; //yedi no vaye tei nai basxew
+        }
+    }
+
+    //preparing to hide all of the things
+
     document.getElementById('dashboard-content').style.display = 'none';
     document.getElementById('notes-app').style.display = 'none';
-    document.querySelector('.main-chat-container').style.display = 'flex';
+    document.querySelector('.main-chat-container').style.display = 'none';
+
+    if (viewName === 'home') {
+        document.getElementById('dashboard-content').style.display = '';
+    } else if (viewName === 'notes') {
+        document.getElementById('notes-app').style.display = 'block';
+        if (typeof loadNotes === 'function') loadNotes();
+    } else if (viewName === 'ai') {
+        document.querySelector('.main-chat-container').style.display = 'flex';
+    }
+    return true;
+}
+
+
+//nav link handing functiuon running hai 
+document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forEach(link => {
+    link.addEventListener('click', (e) => {
+        //selecting and adding event listener
+        const isPomoDropdown = link.classList.contains('dropdown-btn');
+        const isSubMenuLink = link.closest('.sub-menu');
+
+        //skipping pomodropdown as it is mentioned earlier
+        if (isPomoDropdown || isSubMenuLink) return;
+        e.preventDefault();
+        const id = link.id;
+        const label = link.querySelector('span')?.textContent.trim();
+
+        let viewName = null;
+        if (link.getAttribute('href') === 'index.html' || label === 'Home') viewName = 'home';
+        else if (label === 'Your Notes') viewName = 'notes';
+        
+        else if (id === 'ai-help-link') viewName = 'ai';
+        console.log(label);
+
+        if(viewName){
+            const swithing = switchView(viewName);
+            if(!switching) return;
+
+        }
+
+        //updating the active  highligh too
+        document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
+        link.closest('li').classList.add('active');//chose gareko link vanda ko closest li 
+});
 });
