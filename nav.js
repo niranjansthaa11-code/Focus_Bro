@@ -181,41 +181,6 @@ function launchFocusMode(totalSeconds, label) {
     });
 
 }
-//active highlight grney 
-document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forEach(link => {
-    link.addEventListener('click', (e) => {
-
-        const focusOverlay = document.getElementById('focus-overlay');
-        const isPomoLink = link.closest('li')?.classList.contains('dropdown');
-
-        if (focusOverlay && !isPomoLink) {
-            //gives the user the confirm message
-            const confirmLeave = confirm('Pomodoro is running ! Are you sure you wanna exist bro ??');
-            if (confirmLeave) {
-                //removing the focus overlay 
-                focusOverlay.remove();
-
-                const dashboardContent = document.getElementById('dashboard-content');
-                const chatContainer = document.querySelector('.main-chat-container');
-                const notesApp = document.getElementById('notes-app');
-                if (dashboardContent) dashboardContent.style.display = '';
-                if (chatContainer) chatContainer.style.display = 'none';
-                if (notesApp) notesApp.style.display = 'none';
-
-            } else {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-        }
-
-
-        // sabai li batw remove except selected 
-        document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
-        // Add active to clicked link's parent li
-        link.closest('li').classList.add('active');
-    });
-});
 
 //making the centeral nav view swithcing kind of thing 
 function switchView(viewName) {
@@ -265,18 +230,18 @@ document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forE
         let viewName = null;
         if (link.getAttribute('href') === 'index.html' || label === 'Home') viewName = 'home';
         else if (label === 'Your Notes') viewName = 'notes';
-        
+
         else if (id === 'ai-help-link') viewName = 'ai';
         console.log(label);
 
-        if(viewName){
-            const swithing = switchView(viewName);
-            if(!switching) return;
+        if (viewName) {
+            const switching = switchView(viewName);
+            if (!switching) return;
 
         }
 
         //updating the active  highligh too
         document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
         link.closest('li').classList.add('active');//chose gareko link vanda ko closest li 
-});
+    });
 });
