@@ -21,7 +21,7 @@ let updateId = null;
 //show hide notes page
 function showNotesView() {
     //it only hides the dashboard item and just show the notes app only in the side bar 
-    dashboard.style.display = 'none';
+    dashboardContent.style.display = 'none';
     if (chatContainer) chatContainer.style.display = 'none';
     notesApp.style.display = 'block';
     hideForm();
@@ -144,6 +144,24 @@ window.editNote = function (id) {
     noteForm.closest('.popup').scrollIntoView({ behavior: 'smooth' }) //selects the first element
 };
 
+//date should be in nepali 
+function toNepaliDateStr(dateStr) {
+    try {
+        const d = new Date(dateStr);
+        const nd = new NepaliDate(d);
+        const nepMonths = [
+            "Baishak", "Jeeth", "Aasar", "Shrawan", "Bhadra", "Ashwin",
+            "Kartik", "Mangsir", "Paush", "Magh", "Falgun", "Chaitra"
+        ];
+        return `${nepMonths[nd.getMonth()]} ${nd.getDate()}, ${nd.getYear()}`;
+    } catch (e) {
+        return dateStr;  // if conversion fails it gets to the ofiicial english one  
+    }
+}
+
+
+
+
 //rendering of notes
 function renderNotes() {
     notesWrapper.innerHTML = '';
@@ -162,7 +180,7 @@ function renderNotes() {
                 <span class="note-desc-text">${filterDesc}</span>
             </div>
             <div class="note-footer">
-                <span class="note-date">${note.date || ''}</span>
+                <span class="note-date">${toNepaliDateStr(note.created_at)} <br>  <hr style="border-color: black;"> ${note.date || ''}</span>
                 <div class="note-actions">
                     <button class="note-edit-btn" onclick="editNote('${note.id}')">Edit</button>
                     <button class="note-del-btn"  onclick="deleteNote('${note.id}')">Delete</button>

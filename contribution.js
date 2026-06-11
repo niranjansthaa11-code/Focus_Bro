@@ -74,7 +74,8 @@ async function renderContributionGrid() {
         if (!cell || cell.count === null) continue;//for future cells
         const nd = new NepaliDate(cell.jsDate);
         const m = nd.getMonth();
-        if (m !== lastMonth) {
+        let lastLabelWeek = -4;
+        if (m !== lastMonth && (w - lastLabelWeek) >= 3 ) {
             lastMonth = m;
             const span = document.createElement('span');
             span.className = 'cg-month';

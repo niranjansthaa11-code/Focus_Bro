@@ -130,6 +130,14 @@ document.querySelectorAll('.sub-menu a').forEach(link => {
 
 function launchFocusMode(totalSeconds, label) {
     document.getElementById('focus-overlay')?.remove(); //?. is a optional parameter hai ...
+
+    const dashboardContent = document.getElementById('dashboard-content');
+    const chatContainer = document.querySelector('.main-chat-container');
+    const notesApp = document.getElementById('notes-app');
+    if (dashboardContent) dashboardContent.style.display = 'none';
+    if (chatContainer) chatContainer.style.display = 'none';
+    if (notesApp) notesApp.style.display = 'none';
+
     let timeLeft = totalSeconds, interval = null //multiple variable seprated by comma hai
 
     const overlay = document.createElement('div');
@@ -163,8 +171,22 @@ function launchFocusMode(totalSeconds, label) {
         }, 1000);//runs every 1 second
     });
     //buttons of pomodoro hai
-    document.getElementById('fo-stop').addEventListener('click', () => { clearInterval(interval); interval=null; });
+    document.getElementById('fo-stop').addEventListener('click', () => { clearInterval(interval); interval = null; });
     document.getElementById('fo-reset').addEventListener('click', () => { clearInterval(interval); interval = null; timeLeft = totalSeconds; render(); });
-    document.getElementById('fo-close').addEventListener('click', () => { clearInterval(interval); overlay.remove(); });
+    document.getElementById('fo-close').addEventListener('click', () => {
+        clearInterval(interval);
+        overlay.remove();
+        if (dashboardContent) dashboardContent.style.display = '';
+        if (chatContainer) chatContainer.style.display = '';
+    });
 
 }
+//active highlight grney 
+document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forEach(link => {
+    link.addEventListener('click', () => {
+        // sabai li batw remove except selected 
+        document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
+        // Add active to clicked link's parent li
+        link.closest('li').classList.add('active');
+    });
+});

@@ -1225,6 +1225,8 @@ auth-box>button:hover {
     color: var(--text);
     opacity: 0.55;
     white-space: nowrap;
+    letter-spacing: -0.02em;
+
 }
 
 .cg-grid-body {
@@ -1241,7 +1243,7 @@ auth-box>button:hover {
 }
 
 .cg-day-label {
-    height: 12px;
+    height: 14px;
     width: 24px;
     width: 24px;
     font-size: 0.6rem;
@@ -1250,10 +1252,10 @@ auth-box>button:hover {
     opacity: 0.5;
     text-align: right;
     padding-right: 4px;
-    line-height: 12px;
+    line-height: 14px;
 }
 
-cg-grid-wrap {
+.cg-grid-wrap {
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -1265,8 +1267,10 @@ cg-grid-wrap {
 /* this hides the scrollbar  */
 #cg-weeks {
     display: flex;
+    flex-direction: col;
     gap: 2px;
 }
+
 
 .cg-box {
     width: 12px;
