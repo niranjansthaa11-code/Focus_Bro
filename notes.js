@@ -46,7 +46,7 @@ document.querySelectorAll('#sidebar ul li a').forEach(link => {
 function showForm(title = 'Add a new Note', btnText = 'Add Note') {
     popupTitle.textContent = title;
     saveBtn.textContent = btnText;
-    noteForm.closest('.popup'.classList.add('form-visible'));
+    noteForm.closest('.popup').classList.add('form-visible');
     titleInput.focus();
 }
 function hideForm() {
@@ -64,7 +64,7 @@ closeIcon.addEventListener('click', hideForm);
 //loading the supabase 
 async function loadNotes() {
     notesWrapper.innerHTML = `<p class="no-notes-msg">Loading...</p>`; //user lai load gareko dekhauna
-    const { data, error } = await supabase
+    const { data, error } = await sb
         .from('notes')
         .select('*')
         .order('created_at', { ascending: false });
@@ -80,6 +80,7 @@ async function loadNotes() {
 }
 
 //saving notes and updating 
+
 noteForm.addEventListener('submit', e => e.preventDefault());
 saveBtn.addEventListener('click', async () => {
     const title = titleInput.value.trim();
@@ -89,19 +90,27 @@ saveBtn.addEventListener('click', async () => {
     saveBtn.textContent = 'Saving....';//tells the user that the notes is saving 
     saveBtn.disabled = true;//to disable the button that makes it  useer unclickable 
 
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) return;
     const now = new Date();
     const date = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`; //getting the date form the system 
 
     if (!isUpdate) {
         //if eroor wait until the output comes out of the supabase
-        const { error } = await supabase
-            .form('notes'
+        const { error } = await sb
+            .from('notes'
             )
+            .insert({ title, description: desc, date, user_id: user.id });
+        if (error) { console.error(error) }
+    } else {
+        const { error } = await sb
+            .from('notes')
             .update({ title, description: desc, date })
-            .eq('id', updateId);
-        if (error) { console.error(eror) }
+            .eq('id', updateId)
+            .eq('user_id',user.id);
+        if (error) { console.error(error); }
     }
-
+    saveBtn.textContent = isUpdate ? 'Update Note' : 'Add Note';
     saveBtn.disabled = false;
     hideForm();
     loadNotes();
@@ -112,7 +121,7 @@ window.deleteNote = async function (id) {
     if (!confirm('Delete this note ?')) return;
 
     //waiting till the supabsase gives the response 
-    const { error } = await supabase
+    const { error } = await sb
         .from('notes')
         .delete()
         .eq('id', id);
@@ -132,7 +141,7 @@ window.editNote = function (id) {
     titleInput.value = note.title;
     descInput.value = note.description;
     showForm('Update Note', "Update Note");
-    noteForm.closest('.popup'.scrollIntoView({ behavior: 'smooth' })) //selects the first element
+    noteForm.closest('.popup').scrollIntoView({ behavior: 'smooth' }) //selects the first element
 };
 
 //rendering of notes
@@ -159,6 +168,6 @@ function renderNotes() {
                     <button class="note-del-btn"  onclick="deleteNote('${note.id}')">Delete</button>
                 </div>
             </div>`;
-            notesWrapper.appendChild(card); //making the created card a child of the ntoeswrapper
+        notesWrapper.appendChild(card); //making the created card a child of the ntoeswrapper
     });
 }

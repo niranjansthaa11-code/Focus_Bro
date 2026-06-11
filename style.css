@@ -1531,7 +1531,7 @@ header h1 {
 
 .note-baksa:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px white;
+    box-shadow: 0 5px 5px grey;
 }
 
 .note-baksa .details {
@@ -1568,7 +1568,345 @@ header h1 {
         transform: translateY(0);
     }
 }
+/* for the scrolling hide ing  */
 
+/* for the note feature  */
+.notes-app {
+    width: 100%;
+    margin-top: 20px;
+    display: none;
+}
+
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notes-header h2 {
+    color: var(--primary);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.add-new-note {
+    background: var(--accent);
+    padding: 8px 18px;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-new-note:hover {
+    background-color: var(--today);
+    transform: scale(0.96);
+}
+
+.notes-wrapper {
+    display: grid;
+    /* as there will be many notes that we willbe presenting in the grid format  */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* notebaksa that will be displayed though java hai */
+.note-baksa {
+    background: #252220;
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.note-baksa:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 5px grey;
+}
+
+.note-baksa .details {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 160px;
+    margin-bottom: 12px;
+}
+
+.notes-app .popup {
+    display: none;
+    background: #252220;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 560px;
+    animation: formslidegrney 0.25s ease;
+}
+
+.notes-app .popup.form-visible {
+    display: block;
+}
+
+@keyframes formslidegrney {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* for the scrolling hide ing  */
+.popup .content::-webkit-scrollbar {
+    display: none;
+}
+
+#note-title::-webkit-scrollbar,
+#note-desc::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+/* for the popup filling  */
+.popup-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 1000;
+}
+
+.popup-box.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup-box .popup {
+    background: #252220;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+}
+
+.notes-app .popup .content header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+.notes-app .popup .content header p {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.notes-app .popup .content header i {
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.2s;
+}
+
+.notes-app .popup .content header i:hover {
+    color: var(--accent);
+}
+
+/* css for the form that is gonna be going to displayed  */
+
+.notes-app .popup .content form {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.notes-app .row-title,
+.notes-app .row-description {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.notes-app .row-title label,
+.notes-app .row-description label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.notes-app #note-title {
+    height: 42px;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+.notes-app #note-desc {
+    height: 100px;
+    resize: vertical;
+}
+
+.notes-app #save-note {
+    align-self: flex-end;
+    width: auto;
+    padding: 9px 28px;
+    border-radius: 40px;
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.notes-app #save-note:hover {
+    background: var(--today);
+}
+
+/* for the seprate card text  */
+
+.note-title-text {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.note-desc-text {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.55;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.note-date {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.note-edit-btn,
+.note-del-btn {
+    background: none;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.note-edit-btn {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--primary);
+}
+
+.note-del-btn {
+    border: 1px solid rgba(255,80,80,0.3);
+    color: #ff6b6b;
+}
+.note-del-btn:hover {
+    background: rgba(255,80,80,0.1);
+}
+.no-notes-msg {
+    color: rgba(255,255,255,0.25);
+    font-style: italic;
+    font-size: 0.9rem;
+    grid-column: 1/-1; 
+    /* grid will strech across all the coloumns alright  */
+}
+
+
+.popup input,
+.popup textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: var(--light);
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.popup textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.popup button {
+    background: var(--accent);
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 40px;
+    font-weight: 700;
+    color: var(--dark);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.popup button:hover {
+    background: var(--today);
+}
+
+#notes-fillup {
+    display: none !important;
+    /* important makes this css rule super important than rest of it  */
+}
+
+#note-title::-webkit-scrollbar,
+#note-desc::-webkit-scrollbar {
+    display: none;
+}
+.note-baksa .details::-webkit-scrollbar {
+    display: none;
+}
 
 
 
