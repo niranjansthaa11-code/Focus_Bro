@@ -188,7 +188,7 @@ function switchView(viewName) {
 
     if (focusOverlay) {
         //alert for the user
-        const confirmLeave = confirm('Pomodoro is still runnning Do you really wanna leave ??');
+        const confirmLeave = confirm('You are in Pomodoro Mode Do you wanna leave ??');
         if (confirmLeave) {
             focusOverlay.remove();
         } else {
@@ -224,6 +224,15 @@ document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forE
         //skipping pomodropdown as it is mentioned earlier
         if (isPomoDropdown || isSubMenuLink) return;
         e.preventDefault();
+        //href link ko lagi separate conditon 
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('http')) {
+            window.open(href, '_blank');
+            return;
+        }
+
+
+
         const id = link.id;
         const label = link.querySelector('span')?.textContent.trim();
 

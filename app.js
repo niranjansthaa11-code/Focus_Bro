@@ -91,6 +91,10 @@ if (typeof NepaliDate === 'undefined') { //this checks if the  nepalidate libry 
 
 
 document.addEventListener('DOMContentLoaded', async function () {
+    //making the supabase auth to be ready first 
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+
     await loadEvents(); // calling the load event function 
     updateAchievementCount();
     renderContributionGrid();
@@ -135,16 +139,37 @@ document.addEventListener('DOMContentLoaded', async function () {
             return;
         }
 
-        listEl.innerHTML = data.map(a => `
-            <div class="event-item" style="background:#1C1A18; border-left:4px solid #4CAF50; margin-bottom:0.8rem;">
-                <div class="event-color" style="background:#4CAF50"></div>
-                <div class="event-time">${a.time}</div>
-                <div class="event-text" style="color:var(--primary)">${a.text}</div>
-                <div style="margin-left:auto; font-size:0.72rem; color:var(--text); white-space:nowrap;">
-                    ${a.date_key}
+
+        //grouping the lifetime achievement acoording to the date
+        const grouped = {};
+        data.forEach(a => {
+            if (!grouped[a.date_key]) grouped[a.date_key] = [];
+            grouped[a.date_key].push(a);
+        });
+
+        listEl.innerHTML = Object.entries(grouped).map(([dateKey, items]) => `
+    <div class="achievement-day-group">
+        <div class="achievement-day-label">
+            <span class="achievement-day-date">${dateKey}</span>
+            <span class="achievement-day-count">${items.length} task${items.length !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="achievement-table">
+            ${items.map((a, i) => `
+                <div class="achievement-row">
+                    <div class="achievement-row-num">${i + 1}</div>
+                    <div class="achievement-row-time">${a.time}</div>
+                    <div class="achievement-row-text">${a.text}</div>
+                    <div class="achievement-row-badge">✓</div>
                 </div>
-            </div>
-        `).join('');
+            `).join('')}
+        </div>
+    </div>
+    <hr class="achievement-divider">
+`).join('');
+
+
+
+
     });
 
     document.getElementById('close-achievement').addEventListener('click', () => {
@@ -512,4 +537,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         date: currentDate.getDate(),
         day: currentDate.getDay()
     });
+});
+//after sign in tyo data update grna help grnaaa
+sb.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+        await loadEvents();
+        await updateAchievementCount();
+        await renderContributionGrid();
+    }
 });

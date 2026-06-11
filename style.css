@@ -1130,12 +1130,12 @@ auth-box>button:hover {
 }
 
 .user-info i {
-   
+
     font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .user-info span {
@@ -1431,11 +1431,12 @@ header h1 {
 .chat-box::-webkit-scrollbar {
     display: none;
 }
-.main-chat-container header p{
+
+.main-chat-container header p {
     font-size: 10px;
     display: flex;
     flex-direction: column;
-    margin-left:10px;
+    margin-left: 10px;
     color: var(--primary);
     justify-content: center;
     align-items: center;
@@ -2177,4 +2178,87 @@ header h1 {
 #notes-fillup {
     display: none !important;
     /* important makes this css rule super important than rest of it  */
+}
+
+
+/* css for the achievenent pannel  */
+.achievement-day-group {
+    margin-bottom: 0.5rem;
+}
+
+.achievement-day-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px;
+    margin-bottom: 6px;
+}
+
+/* for the date that the task is being done  */
+.achievement-day-date {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -.04em;
+    text-transform: uppercase;
+}
+
+/* kati task gryo vannih ko lagi  */
+.achievement-day-count {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+
+}
+
+.achievement-table {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* //euta row lai arrange grney  */
+.achievement-row {
+    display: grid;
+    grid-template-columns: 32px 80px 1fr 32px;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solidrgba(255, 255, 255, 0.04);
+    transition: background 0.15s ease;
+}
+
+/* for good css i am adding this which makes last child have no border  */
+.achievement-row:last-child {
+    border-bottom: none;
+}
+
+.achievement-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.achievement-row-num {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+}
+.achievement-row-time{
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+.achievement-row-text {
+    font-size: 0.85rem;
+    color: var(--primary);
+}
+.achievement-row-badge {
+    /* for that tick thing  */
+    font-size: 0.8rem;
+    color: #4CAF50;
+    font-weight: 700;
+    text-align: center;
+}
+.achievement-divider{
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    margin: 1rem 0;
 }
