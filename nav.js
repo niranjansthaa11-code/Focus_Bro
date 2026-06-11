@@ -184,9 +184,43 @@ function launchFocusMode(totalSeconds, label) {
 //active highlight grney 
 document.querySelectorAll('#sidebar ul li a, #sidebar ul li .dropdown-btn').forEach(link => {
     link.addEventListener('click', () => {
+
+        const focusOverlay = document.getElementById('focus-overlay');
+        const isPomoLink = link.closest('li')?.classList.contains('dropdown');
+
+        if(focusOverlay && !PomoLink){
+            //gives the user the confirm message
+            const confirmLeave = confirm('Pomodoro is running ! Are you sure you wanna exist bro ??');
+            if(confirmLeave){
+                //removing the focus overlay 
+                focusOverlay.remove();
+
+                const dashboardContent = document.getElementById('dashboard-content');
+                const chatContainer = document.querySelector('.main-chat-container');
+                const notesApp = document.getElementById('notes-app');
+                if (dashboardContent) dashboardContent.style.display = '';
+                if (chatContainer) chatContainer.style.display = 'none';
+                if (notesApp) notesApp.style.display = 'none';
+
+            } else{
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+        }
+
+
         // sabai li batw remove except selected 
         document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
         // Add active to clicked link's parent li
         link.closest('li').classList.add('active');
     });
+});
+
+//for hiding the all expcept notes 
+document.getElementById('ai-help-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('dashboard-content').style.display = 'none';
+    document.getElementById('notes-app').style.display = 'none';
+    document.querySelector('.main-chat-container').style.display = 'flex';
 });

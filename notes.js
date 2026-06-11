@@ -30,6 +30,7 @@ function showNotesView() {
 function hideNotesView() {
     notesApp.style.display = 'none';
     dashboardContent.style.display = '';
+    if (chatContainer) chatContainer.style.display = 'none';
 }
 
 //for navbar link   connect 
