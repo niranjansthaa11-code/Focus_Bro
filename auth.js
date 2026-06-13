@@ -33,6 +33,8 @@ function showAuthModal() {
     document.body.appendChild(modal);
     //for knowing if the auth is in signup mode or the login mode also to change betweeen login and sign up tab 
     let mode = 'login';
+    let otpMode = false;
+    let pendingEmail = '';
     document.getElementById('tab-login').addEventListener('click', () => {
         mode = 'login';
         document.getElementById('auth-submit').textContent = 'Login';
@@ -51,33 +53,88 @@ function showAuthModal() {
         const email = document.getElementById('auth-email').value.trim();
         const password = document.getElementById('auth-password').value.trim();
         const errorDiv = document.getElementById('auth-error');
+        errorDiv.style.display = 'none';
+
+        //adding the otp verification steps
+        if (otpMode) {
+            const otp = document.getElementById('auth-otp').value.trim();
+            const { error } = await sb.auth.verifyOtp({
+                email: pendingEmail,
+                token: otp,
+                type: 'email'
+            });
+            if (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            } else {
+                modal.remove(); //removes the modal element enitrely hai 
+                document.querySelector('.main').style.display = '';
+                document.getElementById('sidebar').style.display = '';
+                document.getElementById('user-email').textContent = pendingEmail;
+            }
+            return;
+        }
+
 
         //calss the supabase authentication function 
         let result;
         if (mode === 'login') {
             result = await sb.auth.signInWithPassword({ email, password });
+            if (result.error) {
+                errorDiv.textContent = result.error.message;
+                errorDiv.style.display = 'block';
+            } else {
+                modal.remove();
+                document.querySelector('.main').style.display = '';
+                document.getElementById('sidebar').style.display = '';
+                document.getElementById('user-email').textContent = email;
+            }
         } else {
             result = await sb.auth.signUp({ email, password });
-        }
+            if (result.error) {
+                errorDiv.textContent = result.error.message;
+                errorDiv.style.display = 'block';
+            } else {
+                //signup greny ui chahi otp entry ma shiftt hunxw aba 
+                pendingEmail = email;
+                otpMode = true;
+                document.getElementById('auth-email').style.display = 'none';
+                document.getElementById('auth-password').style.display = 'none';
+                document.querySelector('.auth-tabs').style.display = 'none';
 
-        if (result.error) {
-            errorDiv.textContent = result.error.message;
-            errorDiv.style.display = 'block';
-        } else {
-            //removes the login bar and make the main site visible
-            modal.remove();
-            document.querySelector('.main').style.display = '';
-            document.getElementById('sidebar').style.display = '';
-            document.getElementById('user-email').textContent = email;
+                //otp rakhney thau banauney
+                const otpInput = document.createElement('input');
+                otpInput.type = 'text';
+                otpInput.id = 'auth-otp';
+                otpInput.placeholder = 'Enter 6 digit code from your given email.';
+                otpInput.maxLength = 6;
+                otpInput.style.letterSpacing = '0.3em';
+                otpInput.style.textAlign = 'center';
+                otpInput.style.fontSize = '0.5rem';
+
+                //for telling where the otp was sent 
+                const otpNote = document.createElement('p');
+                otpNote.style.cssText = 'font-size:0.78rem; color:rgba(255,255,255,0.35); text-align:center;';
+                otpNote.textContent = `Code send to ${email}`;
+
+                //submit btn thing 
+                const submitBtn = document.getElementById('auth-submit');
+                submitBtn.parentElement.insertBefore(otpNote, submitBtn);
+                submitBtn.parentElement.insertBefore(otpInput, submitBtn);
+                submitBtn.textContent = 'Verify Code';
+                otpInput.focus();//to make input box active jassly chahi user la8i xoito otp add grna help garxw 
+
+                
+            }
         }
-    });
+        });
 }
 
 initAuth();
 
 
 ///for the logout btn that is in the nav bar section 
-document.getElementById('logout-btn')?.addEventListener('click',async (e)=>{
+document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
     e.preventDefault(); //prevents from acting as href
     await sb.auth.signOut(); // request grxw supra lai signout grnaaa...........
     location.reload();
