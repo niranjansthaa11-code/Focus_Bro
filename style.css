@@ -2272,3 +2272,58 @@ header h1 {
     border-top: 1px solid rgba(255, 255, 255, 0.6);
     margin: 1rem 0;
 }
+
+
+
+
+
+
+
+/* //cahgne password model  */
+#password-modal,
+#forgot-modal {
+    position: fixed;
+    inset: 0;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.auth-error-msg {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    display: none;
+}
+
+.auth-success-msg {
+    color: #6bdf8f;
+    font-size: 0.8rem;
+    display: none;
+}
+
+.auth-box .auth-cancel-btn {
+    margin-top: 4px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-box .auth-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--primary);
+}
+
+.auth-forgot-link {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    margin-top: -6px;
+    
+}
+
