@@ -61,7 +61,7 @@ function showAuthModal() {
             const { error } = await sb.auth.verifyOtp({
                 email: pendingEmail,
                 token: otp,
-                type: 'email'
+                type: 'signup'
             });
             if (error) {
                 errorDiv.textContent = error.message;
@@ -107,7 +107,7 @@ function showAuthModal() {
                 otpInput.type = 'text';
                 otpInput.id = 'auth-otp';
                 otpInput.placeholder = 'Enter 6 digit code from your given email.';
-                otpInput.maxLength = 6;
+                otpInput.maxLength = 20;
                 otpInput.style.letterSpacing = '0.3em';
                 otpInput.style.textAlign = 'center';
                 otpInput.style.fontSize = '0.5rem';
