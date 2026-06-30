@@ -4,6 +4,7 @@ async function initAuth() {
     if (!session) {
         showAuthModal(); //if there is no session it calls showatuth model fxn and shows the login signupform 
     } else {
+        const displayName = session.user.user_metadata?.full_name || session.user.email;
         document.getElementById('user-email').textContent = session.user.user_metadata?.full_name || session.user.email;
 
         //for greeting with the name too 
