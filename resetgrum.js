@@ -25,6 +25,8 @@ document.getElementById('reset-submit').addEventListener('click', async () => {
         return;
     }
 
+    const { error } = await sb.auth.updateUser({ password: newPass });
+
     if (error) {
         errorDiv.textContent = error.message;
         errorDiv.style.display = 'block';
