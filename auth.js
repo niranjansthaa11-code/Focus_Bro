@@ -45,6 +45,7 @@ function showAuthModal() {
         document.getElementById('auth-submit').textContent = 'Login';
         document.getElementById('tab-login').classList.add('active');
         document.getElementById('tab-signup').classList.remove('active');
+        document.getElementById('auth-fullname').style.display='none';
 
     });
     document.getElementById('tab-signup').addEventListener('click', () => {
@@ -52,6 +53,7 @@ function showAuthModal() {
         document.getElementById('auth-submit').textContent = 'Sign Up';
         document.getElementById('tab-signup').classList.add('active');
         document.getElementById('tab-login').classList.remove('active');
+        document.getElementById('auth-fullname').style.display='block';
     });
     document.getElementById('auth-submit').addEventListener('click', async () => {
         //user ley submit dabda email password lai linxww 
@@ -92,11 +94,6 @@ function showAuthModal() {
                 document.getElementById('user-email').textContent = email;
             }
         } else {
-            result = await sb.auth.signUp({ email, password });
-            if (result.error) {
-                errorDiv.textContent = result.error.message;
-                errorDiv.style.display = 'block';
-            } else {
                 const fullName = document.getElementById('auth-fullname').value.trim();
                 if (!fullName) {
                     errorDiv.textContent = 'Please enter your full name.';
@@ -117,6 +114,7 @@ function showAuthModal() {
                     //signup greny ui chahi otp entry ma shiftt hunxw aba 
                     pendingEmail = email;
                     otpMode = true;
+                    document.getElementById('auth-fullname').style.display = 'none';
                     document.getElementById('auth-email').style.display = 'none';
                     document.getElementById('auth-password').style.display = 'none';
                     document.querySelector('.auth-tabs').style.display = 'none';
@@ -145,7 +143,6 @@ function showAuthModal() {
 
                 }
             }
-        }
     });
 }
 

@@ -32,7 +32,7 @@ document.getElementById('reset-submit').addEventListener('click', async () => {
         errorDiv.style.display = 'block';
 
     } else {
-        successDiv.textContent = 'Password is Updated Sucessfully! Redirecting you to login ......';
+        successDiv.textContent = 'Password is Updated Sucessfully! ';
         successDiv.style.display = 'block';
         setTimeout(() => {
             window.location.href = 'index.html'//for transfering it to the real dashboard 
