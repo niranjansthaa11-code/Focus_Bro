@@ -5,7 +5,17 @@ async function initAuth() {
         showAuthModal(); //if there is no session it calls showatuth model fxn and shows the login signupform 
     } else {
         document.getElementById('user-email').textContent = session.user.user_metadata?.full_name || session.user.email;
+
+        //for greeting with the name too 
+        const greetingNameEl = document.getElementById('greeting-name');
+        if (greetingNameEl) {
+           const firstName = displayName.split(' ')[0]; //taking only the first name by spliting by space 
+    greetingNameEl.textContent = `${firstName} `;
+        }
     }
+
+
+
 }
 function showAuthModal() {
     document.querySelector('.main').style.display = 'none';
@@ -45,7 +55,7 @@ function showAuthModal() {
         document.getElementById('auth-submit').textContent = 'Login';
         document.getElementById('tab-login').classList.add('active');
         document.getElementById('tab-signup').classList.remove('active');
-        document.getElementById('auth-fullname').style.display='none';
+        document.getElementById('auth-fullname').style.display = 'none';
 
     });
     document.getElementById('tab-signup').addEventListener('click', () => {
@@ -53,7 +63,7 @@ function showAuthModal() {
         document.getElementById('auth-submit').textContent = 'Sign Up';
         document.getElementById('tab-signup').classList.add('active');
         document.getElementById('tab-login').classList.remove('active');
-        document.getElementById('auth-fullname').style.display='block';
+        document.getElementById('auth-fullname').style.display = 'block';
     });
     document.getElementById('auth-submit').addEventListener('click', async () => {
         //user ley submit dabda email password lai linxww 
@@ -94,55 +104,55 @@ function showAuthModal() {
                 document.getElementById('user-email').textContent = email;
             }
         } else {
-                const fullName = document.getElementById('auth-fullname').value.trim();
-                if (!fullName) {
-                    errorDiv.textContent = 'Please enter your full name.';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-                result = await sb.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: { full_name: fullName } //stores the data in the database 
-                    }
-                });
-                if (result.error) {
-                    errorDiv.textContent = result.error.message;
-                    errorDiv.style.display = "block";
-                } else {
-                    //signup greny ui chahi otp entry ma shiftt hunxw aba 
-                    pendingEmail = email;
-                    otpMode = true;
-                    document.getElementById('auth-fullname').style.display = 'none';
-                    document.getElementById('auth-email').style.display = 'none';
-                    document.getElementById('auth-password').style.display = 'none';
-                    document.querySelector('.auth-tabs').style.display = 'none';
-
-                    //otp rakhney thau banauney
-                    const otpInput = document.createElement('input');
-                    otpInput.type = 'text';
-                    otpInput.id = 'auth-otp';
-                    otpInput.placeholder = 'Enter 8 digit code from your given email.';
-                    otpInput.maxLength = 20;
-                    otpInput.style.letterSpacing = '0.3em';
-                    otpInput.style.textAlign = 'center';
-                    otpInput.style.fontSize = '0.5rem';
-
-                    //for telling where the otp was sent 
-                    const otpNote = document.createElement('p');
-                    otpNote.style.cssText = 'font-size:0.78rem; color:rgba(255,255,255,0.35); text-align:center;';
-                    otpNote.textContent = `Code send to ${email}`;
-
-                    //submit btn thing 
-                    const submitBtn = document.getElementById('auth-submit');
-                    submitBtn.parentElement.insertBefore(otpNote, submitBtn);
-                    submitBtn.parentElement.insertBefore(otpInput, submitBtn);
-                    submitBtn.textContent = 'Verify Code';
-                    otpInput.focus();//to make input box active jassly chahi user la8i xoito otp add grna help garxw 
-
-                }
+            const fullName = document.getElementById('auth-fullname').value.trim();
+            if (!fullName) {
+                errorDiv.textContent = 'Please enter your full name.';
+                errorDiv.style.display = 'block';
+                return;
             }
+            result = await sb.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: { full_name: fullName } //stores the data in the database 
+                }
+            });
+            if (result.error) {
+                errorDiv.textContent = result.error.message;
+                errorDiv.style.display = "block";
+            } else {
+                //signup greny ui chahi otp entry ma shiftt hunxw aba 
+                pendingEmail = email;
+                otpMode = true;
+                document.getElementById('auth-fullname').style.display = 'none';
+                document.getElementById('auth-email').style.display = 'none';
+                document.getElementById('auth-password').style.display = 'none';
+                document.querySelector('.auth-tabs').style.display = 'none';
+
+                //otp rakhney thau banauney
+                const otpInput = document.createElement('input');
+                otpInput.type = 'text';
+                otpInput.id = 'auth-otp';
+                otpInput.placeholder = 'Enter 8 digit code from your given email.';
+                otpInput.maxLength = 20;
+                otpInput.style.letterSpacing = '0.3em';
+                otpInput.style.textAlign = 'center';
+                otpInput.style.fontSize = '0.5rem';
+
+                //for telling where the otp was sent 
+                const otpNote = document.createElement('p');
+                otpNote.style.cssText = 'font-size:0.78rem; color:rgba(255,255,255,0.35); text-align:center;';
+                otpNote.textContent = `Code send to ${email}`;
+
+                //submit btn thing 
+                const submitBtn = document.getElementById('auth-submit');
+                submitBtn.parentElement.insertBefore(otpNote, submitBtn);
+                submitBtn.parentElement.insertBefore(otpInput, submitBtn);
+                submitBtn.textContent = 'Verify Code';
+                otpInput.focus();//to make input box active jassly chahi user la8i xoito otp add grna help garxw 
+
+            }
+        }
     });
 }
 
