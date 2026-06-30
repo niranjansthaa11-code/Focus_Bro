@@ -257,7 +257,7 @@ function showForgotPasswordModal() {
 
         //yesley chahi supabase lai redirect grna help garxw ....
         const { error } = await sb.auth.resetPasswordForEmail(email, {
-            redirectTo: window.location.origin + '/reset-password.html'
+            redirectTo: 'https://niranjansthaa11-code.github.io/Focus_Bro/reset-password.html'
         });
 
         if (error) {
